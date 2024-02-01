@@ -14,19 +14,20 @@ final class Album
 
     private date $realeaseYear;
 
-    private int $idGenre;
-
     private String $image;
 
-    private Array $musiques;
+    /**
+     * @var Genre[]
+     */
+    private array $genres = [];
 
-    public function __construct(int $idAlbum, int $idArtiste, String $nomAlbum, date $realseYear, int $idGenre)
+    public function __construct(int $idAlbum, int $idArtiste, String $nomAlbum, date $realseYear)
     {
         $this->idAlbum = $idAlbum;
         $this->idArtiste = $idArtiste;
         $this->nomAlbum = $nomAlbum;
         $this->realeaseYear = $realeaseYear;
-        $this->genre = $genre;
+        $this->genres = [];
         $this ->image = None;
         $this->musiques = [];
     }
