@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Image\Type;
+namespace Modele;
 
 final class Image{
     private int $idImage;
@@ -36,6 +36,6 @@ final class Image{
         $this->image = $image;
     }
 
-    
+
 
 }

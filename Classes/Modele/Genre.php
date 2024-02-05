@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Genre\Type;
+namespace Modele;
 
 final class Genre{
     private int $idGenre;

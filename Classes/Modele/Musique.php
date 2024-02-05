@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Musique\Type;
+namespace Modele;
 
 final class Musique
 {

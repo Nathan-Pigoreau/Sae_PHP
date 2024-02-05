@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Utilisateur\Type;
+namespace Modele;
 
 final class Utilisateur
 {

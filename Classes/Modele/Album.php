@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Album\Type;
+namespace Modele;
 
 final class Album
 {
