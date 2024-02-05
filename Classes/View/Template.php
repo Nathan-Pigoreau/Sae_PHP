@@ -22,6 +22,8 @@ final class Template
     public function __construct(string $path)
     {
         $this->path = $path;
+        $this->layout = 'main';
+        $this->content = '';
     }
 
     public function getPath(): string
@@ -60,7 +62,7 @@ final class Template
         require sprintf(
             '%s/%s.php',
             $this->getPath(),
-            $this->getLayout()
+            $this->getLayout(),
         );
         return ob_get_clean();
     }
