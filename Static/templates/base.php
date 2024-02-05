@@ -8,28 +8,28 @@
 </head>
 <body>
     <header>
-        <div class="nav">
-        <nav>
-            <ul>
-                <li>
-                    <a href="#">
-                        <img src="home.png" alt="écran d'accueil"/>
-
-                    </a>
-                </li>
-                <li>
-                    <a href="/playlist">Playlist</a>
-                </li>
-                <li>
-                    <a href="/profil">Profil</a>
-                </li>
-                <li>
-                    <a href="/logout">Logout</a>
-                </li>
+            <div class="nav">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="#"> Accueil
+                                <!-- <img src="Static/images/home.png" alt="écran d'accueil"/> -->
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/playlist">Playlist</a>
+                        </li>
+                        <li>
+                            <a href="/profil">Profil</a>
+                        </li>
+                        <li>
+                            <a href="/logout">Logout</a>
+                        </li>    
+                    </ul>
+                </nav>
+                <input type="search" id="search" name="search" placeholder="Rechercher un titre, un artiste, un album...">
                 
-            </ul>
-        </nav>
-        </div>
+            </div>
     </header>
 </body>
 </html>

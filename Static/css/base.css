@@ -4,17 +4,42 @@ li{
     padding-bottom: 5%;
 }
 nav{
-    background-color: black;
-    color: white;
+    color: #f2f2f2;
     width: 15%;
     min-height: 100%;
+    display: inline;
 }
 a{
     text-decoration: none;
     color: white;
+
+}
+body{
+    background-color: #333333;
+}
+img{
+    max-width: 30%;
+    max-height: 30%;
+    position: absolute;
+    top: 0;
+    left: 0;
+
 }
 .nav{
     display: flex;
+    min-height: 100%;
+    flex-wrap: wrap;
 }
-body{padding: 0%;
+#id{
+    max-height: 5%;
+}
+input{
+    padding: 1%;
+    height: 10%;
+    width: 30%;
+    flex-grow: 0;
+    border: 1px solid #333333;
+    border-radius: 4px;
+    color: #333333;
+    background-color: #f2f2f2;
 }
