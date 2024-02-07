@@ -21,7 +21,12 @@ namespace Templates;
       <input placeholder="Password" id="password" name="password" type="password">
       <input value="Register" class="btn" type="submit">
     </form>
-</div>
+    <?php
+      if (isset($_GET['error']) && $_GET['error'] === "1") { // Si on a une erreur et que ce sont les identifiants incorrects
+          echo "<p>Identifiants déjà utilisés</p>";
+      }
+    ?>
+  </div>
 </div>
 </body>
 </html>

@@ -21,6 +21,11 @@ namespace Templates;
       <input value="Login" class="btn" type="submit">
     </form>
   <p>Pas encore inscrit ?<a href="register.php"> Inscrivez-vous </a></p>
+  <?php
+      if (isset($_GET['error']) && $_GET['error'] === "1") {
+          echo "<p>Identifiants incorrect</p>";
+      }
+    ?>
 </div>
 </div>
 </body>

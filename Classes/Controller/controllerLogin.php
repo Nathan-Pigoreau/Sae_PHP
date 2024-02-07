@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($__USER__->connexionUser($_POST['email'], $_POST['password'])) {
             header('Location: ../../Templates/home.php');
         } else {
-            header('Location: ../../Templates/login.php');
+            header('Location: ../../Templates/login.php?error=1');
         }
     }
 }
