@@ -1,2 +1,2 @@
 <?php
-define('SQLITE_DB', __DIR__.'/../Data/db.sqlite3');
+define('SQLITE_DB', __DIR__.'/../db.sqlite3');

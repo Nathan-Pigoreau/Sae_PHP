@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Utilisateur\Type;
+namespace Modele;
 
 final class Utilisateur
 {
@@ -28,10 +28,8 @@ final class Utilisateur
      */
     private array $playlists = [];
 
-    /**
-     * @var Image
-     */
-    private $pdp;
+    
+    private String $pdp;
 
 
     // Constructeur
@@ -44,7 +42,7 @@ final class Utilisateur
         $this->email = $email;
         $this->descriptionUser = $descriptionUser;
         $this->roleU = $roleU;
-        $this->pdp = None;
+        $this->pdp = "defaultPDP.png";
         $this->favoris = [];
         $this->playlists = [];
     }

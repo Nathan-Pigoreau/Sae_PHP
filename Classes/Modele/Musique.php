@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Musique\Type;
+namespace Modele;
 
 final class Musique
 {
     private int $idMusique;
 
-    private int $idAlbum;
+    private ?int $idAlbum;
+
+    private int $idArtiste;
 
     private String $nomMusique;
 
     private date $realeaseYear;
 
-    /**
-     * @var Image
-     */
-    private $image;
+    
+    private String $image;
 
      /**
      * @var Genre[]
@@ -29,10 +29,11 @@ final class Musique
     
     // Constructeur
 
-    public function __construct(int $idMusique, int $idAlbum, String $nomMusique, date $realeaseYear,Image $image, int $nbVues)
+    public function __construct(int $idMusique, int $idArtiste, String $nomMusique, date $realeaseYear,Image $image, int $nbVues)
     {
         $this->idMusique = $idMusique;
-        $this->idAlbum = $idAlbum;
+        $this->idAlbum = null;
+        $this->idArtiste = $idArtiste;
         $this->nomMusique = $nomMusique;
         $this->realeaseYear = $realeaseYear;
         $this->image = $image;

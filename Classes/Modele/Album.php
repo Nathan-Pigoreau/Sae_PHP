@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Album\Type;
+namespace Modele;
 
 final class Album
 {
@@ -21,14 +21,14 @@ final class Album
      */
     private array $genres = [];
 
-    public function __construct(int $idAlbum, int $idArtiste, String $nomAlbum, date $realseYear)
+    public function __construct(int $idAlbum, int $idArtiste, String $nomAlbum, date $realseYear, Image $image)
     {
         $this->idAlbum = $idAlbum;
         $this->idArtiste = $idArtiste;
         $this->nomAlbum = $nomAlbum;
         $this->realeaseYear = $realeaseYear;
         $this->genres = [];
-        $this ->image = None;
+        $this ->image = $image;
         $this->musiques = [];
     }
 
