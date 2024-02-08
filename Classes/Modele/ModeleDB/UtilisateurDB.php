@@ -6,13 +6,15 @@ namespace Modele\ModeleDB;
 
 use PDO;
 use Modele\Utilisateur;
-use Modele\Playlist;
-use Modele\Musique;
 use Modele\DataBase;
+use Modele\ModeleDB\PlaylistDB;
+use Modele\ModeleDB\MusiqueDB;
 
 require_once(__DIR__ . '/../DataBase.php');
 require_once(__DIR__ . '/../Utilisateur.php');
 require_once(__DIR__ . '/../../autoloader.php');
+require_once(__DIR__ . '/PlaylistDB.php');
+require_once(__DIR__ . '/MusiqueDB.php');
 
 final class UtilisateurDB
 {
@@ -70,7 +72,9 @@ final class UtilisateurDB
     {
         $userData = $this->getUserByEmail($email);
         $user = new Utilisateur($userData['idUser'], $userData['pseudo'], $userData['mdp'], $userData['email'], $userData['descriptionU'], $userData['roleU']);
-        
+        if ($userData['imageUser'] != null)
+            $user->setImage($userData['imageUser']);
+
         $this->getUserPlaylist($userData['idUser']);
         $this->getUserFavoris($userData['idUser']);
     }

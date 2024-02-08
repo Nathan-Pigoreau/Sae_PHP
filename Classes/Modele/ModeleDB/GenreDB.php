@@ -28,22 +28,6 @@ final class GenreDB
         return $genre;
     }
 
-    public function getGenresAlbum(int $idAlbum)
-    {
-        $query = "SELECT idGenre FROM APARTENIR WHERE idAlbum = :idAlbum";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':idAlbum', $idAlbum);
-        $stmt->execute();
-        $genresData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $genres = [];
-        foreach ($genresData as $genreData)
-        {
-            $genre = $this->getGenres($genreData['idGenre']);
-            array_push($genres, $genre);
-        }
-        return $genres;
-    }
-
     public function getGenres()
     {
         $query = "SELECT * FROM GENRE";
