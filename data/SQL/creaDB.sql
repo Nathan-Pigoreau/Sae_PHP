@@ -43,7 +43,7 @@ CREATE TABLE UTILISATEUR(
     mdp TEXT NOT NULL,
     email TEXT NOT NULL,
     descriptionU TEXT NOT NULL,
-    roleU TEXT NOT NULL DEFAULT 'USER'
+    roleU TEXT NOT NULL DEFAULT 'USER',
     idImage INTEGER DEFAULT 1,
     FOREIGN KEY (idImage) REFERENCES IMAGE(idImage)
 );
@@ -165,6 +165,8 @@ CREATE TABLE APPARTENIR(
     FOREIGN KEY (idGenre) REFERENCES GENRE_MUSICAL(idGenre)
 );
 
+
+INSERT INTO IMAGE (idImage, image) VALUES (0, 'defaultPDP.png');
 
 
 

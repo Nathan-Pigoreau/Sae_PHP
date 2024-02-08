@@ -27,9 +27,9 @@ final class AlbumDB
 
         foreach ($albumsData as $albumData)
         {
-            $image = $this->getImageAlbum($albumData['idAlbum']);
-            $genres = $this->getGenresAlbum($albumData['idAlbum']);
-            $pistes = $this->getPistesAlbum($albumData['idAlbum']);
+            $image = ;
+            $genres = ;
+            $pistes = ;
 
             $album = new Album($albumData['idAlbum'], $albumData['idArtiste'], $albumData['nomAlbum'], $albumData['date']);
             //Initialisation des images
@@ -42,44 +42,6 @@ final class AlbumDB
             //Initialisation des pistes
 
         }
-    }
-
-    public function getImageAlbum(int $idAlbum)
-    {
-        $query = "SELECT image FROM LIER WHERE idAlbum = :idAlbum";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':idAlbum', $idAlbum);
-        $stmt->execute();
-        $image = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $image;
-    }
-
-    public function getGenresAlbum(int $idAlbum)
-    {
-        $query = "SELECT idGenre FROM APARTENIR WHERE idAlbum = :idAlbum";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':idAlbum', $idAlbum);
-        $stmt->execute();
-        $genres = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $genres;
-    }
-
-    public function getPistesAlbum(int $idAlbum)
-    {
-        $query = "SELECT * FROM MUSIQUE WHERE idAlbum = :idAlbum";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':idAlbum', $idAlbum);
-        $stmt->execute();
-        $pistesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $pistes = [];
-
-        foreach ($pistesData as $pisteData)
-        {
-            $piste = new Musique($pisteData['idPiste'], $pisteData['idAlbum'], $pisteData['nomPiste'], $pisteData['duree']);
-            $pistes[] = $piste;
-        }
-
-        return $pistes;
     }
 
     public function updateAlbum(Album $album)

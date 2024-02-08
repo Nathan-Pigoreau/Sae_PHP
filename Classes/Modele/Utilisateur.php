@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Modele;
 
+use Modele\Image;
+
+require_once(__DIR__ . '/Image.php');
+
 final class Utilisateur
 {
     private int $idUser;
@@ -44,7 +48,7 @@ final class Utilisateur
         $this->email = $email;
         $this->descriptionUser = $descriptionUser;
         $this->roleU = $roleU;
-        $this->pdp = None;
+        $this->pdp = new Image(0, "defaultPDP.png");
         $this->favoris = [];
         $this->playlists = [];
     }

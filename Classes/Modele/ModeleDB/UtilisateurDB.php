@@ -11,6 +11,7 @@ use Modele\Musique;
 use Modele\DataBase;
 
 require_once(__DIR__ . '/../DataBase.php');
+require_once(__DIR__ . '/../Utilisateur.php');
 require_once(__DIR__ . '/../../autoloader.php');
 
 final class UtilisateurDB
@@ -53,7 +54,7 @@ final class UtilisateurDB
         $stmt->execute();
 
         // Récupérer l'ID de la dernière insertion en utilisant PDO
-        $lastInsertId = $this->db->lastInsertId();
+        $lastInsertId = intval($this->db->lastInsertId());
 
         $this->initNewUser($lastInsertId, $pseudo, $hashedPassword, $email, $description, $role);
     }
