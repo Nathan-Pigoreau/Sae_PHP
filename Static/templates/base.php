@@ -12,7 +12,6 @@
                 <nav>
                     <ul>
                         <li>
-                            <a href="#"> Accueil
                                 <!-- <img src="Static/images/home.png" alt="écran d'accueil"/> -->
                             </a>
                         </li>
@@ -23,13 +22,16 @@
                             <a href="/profil">Profil</a>
                         </li>
                         <li>
-                            <a href="/logout">Logout</a>
                         </li>    
                     </ul>
                 </nav>
-                <input type="search" id="search" name="search" placeholder="Rechercher un titre, un artiste, un album...">
-                
+            </div>
+            <div class="search">
+                    <input type="search" id="search" name="search" placeholder="Rechercher un titre, un artiste, un album...">
+                    <a href="/Templates/login.php">Connexion</a>
+                    <img id='logo' src='/Static/images/logo.png' alt="Icone gaitunes">
             </div>
     </header>
+    
 </body>
-</html>
+</html
