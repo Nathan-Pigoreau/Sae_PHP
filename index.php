@@ -1,4 +1,5 @@
 <?php
+
 use Provider\DataLoaderSqlite;
 use Repository\QuestionRepository;
 use Provider\DataLoaderJson;
@@ -16,4 +17,3 @@ $template->setLayout('main');
 // $template->setContent($content);
 
 echo $template->compile();
-
