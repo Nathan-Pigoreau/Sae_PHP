@@ -1,0 +1,74 @@
+li{
+    list-style: none;
+    margin: 0;
+    padding-bottom: 5%;
+}
+nav{
+    width: 15%;
+    min-height: 100%;
+    display: inline;
+    border-right: 2px solid #333333;
+    margin-right: 5%;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+}
+a{
+    text-decoration: none;
+    color: #333333;
+}
+
+img{
+    max-width: 30%;
+    max-height: 30%;
+
+}
+.nav{
+    display: flex;
+    min-height: 100%;
+    flex-wrap: wrap;
+    }
+#id{
+    max-height: 5%;
+}
+input{
+    padding: 1%;
+    height: 10%;
+    width: 30%;
+    flex-grow: 0;
+    border: 1px solid ;
+    border-radius: 4px;
+    color: #333333;
+    margin-top: 1%;
+    margin-right: 10%;
+}
+/* à remplir avec la bonne police  */
+body{
+    font-family: 'Georgia', serif;
+}
+#logo{
+    position: fixed;
+    transform: scale(0.3);
+    left: 80%;
+}
+.search p{
+    display: inline;
+    margin-right: 10%;
+}
+
+.search{
+    padding-left: 18%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding-top: 1%;
+}
+.search a{
+    border:  2px solid #333333;
+    border-radius: 4px;
+    padding: 5px;   
+}
+main,p{
+    padding-left: 20% ;
+}
