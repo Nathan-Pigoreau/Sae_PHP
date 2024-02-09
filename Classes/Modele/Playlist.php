@@ -71,6 +71,21 @@ final class Playlist
         }
     }
 
+    public function render(): string
+    {
+        $html = "<div class='playlist'>";
+        $html .= "<h2>" . $this->nomPlaylist . "</h2>";
+        $html .= "<div class='musiques'>";
+        foreach ($this->musiques as $musique)
+        {
+            $html .= $musique->render();
+        }
+        $html .= "</div>";
+        $html .= "</div>";
+
+        return $html;
+    }
+
 }
 
 

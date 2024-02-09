@@ -11,12 +11,6 @@ use Modele\ModeleDB\GenreDB;
 use Modele\ModeleDB\MusiqueDB;
 use Modele\ModeleDB\ImageDB;
 
-require_once(__DIR__ . '/../DataBase.php');
-require_once(__DIR__ . '/../Album.php');
-require_once(__DIR__ . '/GenreDB.php');
-require_once(__DIR__ . '/ImageDB.php');
-require_once(__DIR__ . '/MusiqueDB.php');
-
 final class AlbumDB
 {
     private PDO $db;

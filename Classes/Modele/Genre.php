@@ -35,4 +35,14 @@ final class Genre{
     {
         $this->nomGenre = $nomGenre;
     }
+
+
+    public function render(): string
+    {
+        $html = "<div class='genre'>";
+        $html .= "<h2>" . $this->nomGenre . "</h2>";
+        $html .= "</div>";
+
+        return $html;
+    }
 }

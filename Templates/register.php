@@ -2,6 +2,8 @@
 declare(strict_types=1);
 
 namespace Templates;
+
+require_once '../Classes/autoloader.php'; 
 ?>
 
 <!doctype html>

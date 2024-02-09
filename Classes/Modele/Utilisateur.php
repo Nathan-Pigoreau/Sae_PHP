@@ -153,6 +153,33 @@ final class Utilisateur
     }
 
 
+    public function render(): string
+    {
+        $html = "<div class='utilisateur'>";
+        $html .= "<h2>" . $this->pseudo . "</h2>";
+        $html .= "<p>" . $this->descriptionUser . "</p>";
+        $html .= "<div class='favoris'>";
+        foreach ($this->favoris as $musique)
+        {
+            $html .= $musique->render();
+        }
+        $html .= "</div>";
+        $html .= "</div>";
+
+        return $html;
+    }
+
+
+    public function renderUserPlaylist(): string
+    {
+        $html = "<div class='playlists'>";
+        foreach ($this->playlists as $playlist)
+        {
+            $html .= $playlist->render();
+        }
+    }
+
+
 
 
 }

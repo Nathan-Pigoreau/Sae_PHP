@@ -101,4 +101,16 @@ final class Musique
     {
         $this->idAlbum = $idAlbum;
     }
+
+    public function gender(): string
+    {
+        $html = "<div class='musique'>";
+        $html .= "<img src='" . $this->image . "' alt='image musique'>";
+        $html .= "<h2>" . $this->nomMusique . "</h2>";
+        $html .= "<p>" . $this->realeaseYear . "</p>";
+        $html .= "<p>" . $this->nbVues . "</p>";
+        $html .= "</div>";
+
+        return $html;
+    }
 }

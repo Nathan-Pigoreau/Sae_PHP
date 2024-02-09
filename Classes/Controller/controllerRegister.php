@@ -4,8 +4,7 @@ namespace Controller;
 use Modele\ModeleDB\UtilisateurDB;
 use Modele\Utilisateur;
 
-require_once '../autoloader.php';
-require_once '../Modele/ModeleDB/UtilisateurDB.php';
+require_once '../../Classes/autoloader.php';
 
 $__USER__ = new UtilisateurDB();
 

@@ -1,9 +1,12 @@
 <?php
 
 spl_autoload_register(function ($className) {
-    $classPath = str_replace('\\', DIRECTORY_SEPARATOR, $className) . '.php';
-    if (file_exists($classPath)) {
-        require_once $classPath;
+    // Convertit le nom de classe en chemin de fichier
+    $filePath = __DIR__ . '/' . str_replace('\\', '/', $className) . '.php';
+
+    // Vérifie si le fichier existe et le charge s'il existe
+    if (file_exists($filePath)) {
+        require_once $filePath;
     }
 });
 ?>
