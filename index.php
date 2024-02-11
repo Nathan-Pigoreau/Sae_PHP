@@ -1,10 +1,19 @@
 <?php
-// Chemin pour accéder à la base de données
+
+use Provider\DataLoaderSqlite;
+use Repository\QuestionRepository;
+use Provider\DataLoaderJson;
+use View\Template;
+
+
 require_once 'Configuration/config.php';
 
 // SPL autoloader
-require_once '/Classes/autoloader.php'; 
+require 'Classes/autoloader.php'; 
+Autoloader::register(); 
+// Template
+$template = new Template('Static/templates');
+$template->setLayout('main');
+// $template->setContent($content);
 
-header("Location: ./Templates/home.php");
-exit();
-?>
+echo $template->compile();

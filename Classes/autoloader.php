@@ -1,12 +1,23 @@
 <?php
-
-spl_autoload_register(function ($className) {
-    // Convertit le nom de classe en chemin de fichier
-    $filePath = __DIR__ . '/' . str_replace('\\', '/', $className) . '.php';
-
-    // Vérifie si le fichier existe et le charge s'il existe
-    if (file_exists($filePath)) {
-        require_once $filePath;
+require_once 'Classes/Debug/dd.php';
+/**
+ * Class Autoloader
+ */
+class Autoloader{
+    /**
+     * Enregistre notre autoloader
+     */
+    static function register(){
+        spl_autoload_register(array(__CLASS__, 'autoload'));
     }
-});
-?>
+
+    /**
+     * Inclue le fichier correspondant à notre classe
+     * @param $class string Le nom de la classe à charger
+     */
+    static function autoload($fqcn){
+        $path = str_replace('\\', '/', $fqcn);
+        require 'Classes/' . $path . '.php';
+    }
+
+}
