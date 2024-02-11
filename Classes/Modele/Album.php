@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Modele;
 
+use Modele\ModeleDB\AlbumDB;
+
 final class Album
 {
     private int $idAlbum;
@@ -21,6 +23,8 @@ final class Album
      */
     private array $genres = [];
 
+    private AlbumDB $modelDB;
+
     public function __construct(int $idAlbum, int $idArtiste, String $nomAlbum, date $realseYear, Image $image)
     {
         $this->idAlbum = $idAlbum;
@@ -30,6 +34,8 @@ final class Album
         $this->genres = [];
         $this ->image = $image;
         $this->musiques = [];
+
+        $this->modelDB = new AlbumDB();
     }
 
     public function getIdAlbum(): int
@@ -70,24 +76,49 @@ final class Album
     public function setImage(String $image): void
     {
         $this->image = $image;
+        $this->updateAlbum();
     }
 
-    public function setMusiques(Array $musiques): void
+    public function setNomAlbum(String $nomAlbum): void
     {
-        $this->musiques = $musiques;
+        $this->nomAlbum = $nomAlbum;
+        $this->updateAlbum();
     }
+
+    public function setRealeaseYear(date $realeaseYear): void
+    {
+        $this->realeaseYear = $realeaseYear;
+        $this->updateAlbum();
+    }
+
 
     public function addMusique(Musique $musique): void
     {
         $this->musiques[] = $musique;
+        if($musique->getAlbum() !== null)
+        {
+            $musique->getAlbum()->removeMusique($musique);
+        }
+        $this->modelDB->addMusiqueAlbum($this->idAlbum, $musique->getIdMusique());
     }
 
     public function removeMusique(Musique $musique): void
     {
-        $key = array_search($musique, $this->musiques, true);
-        if ($key !== false) {
-            unset($this->musiques[$key]);
+        $idMusique = $musique->getIdMusique();
+        $index = array_search($idMusique, array_column($this->musiques, 'idMusique'));
+
+        if ($index !== false) {
+            unset($this->musiques[$index]);
+            $this->musiques = array_values($this->musiques);
         }
+
+        $musique->setAlbum(null);
+        $this->modelDB->removeMusiqueAlbum($this->idAlbum, $idMusique);
+    }
+
+    public function updateAlbum(): void
+    {
+        $this->modelDB->updateAlbum($this);
     }
 
     public function render()

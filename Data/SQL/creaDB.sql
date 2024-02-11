@@ -117,6 +117,16 @@ CREATE TABLE APPARTENIR(
     FOREIGN KEY (idGenre) REFERENCES GENRE(idGenre)
 );
 
+DROP TABLE IF EXISTS NOTER;
+CREATE TABLE NOTER(
+    idUser INTEGER NOT NULL,
+    idAlbum INTEGER NOT NULL,
+    note INTEGER NOT NULL,
+    PRIMARY KEY (idUser, idAlbum),
+    FOREIGN KEY (idUser) REFERENCES UTILISATEUR(idUser),
+    FOREIGN KEY (idAlbum) REFERENCES ALBUM(idAlbum)
+);
+
 -- Insertion des données :
 INSERT INTO GENRE (idGenre, nomGenre) VALUES 
 (1, "Pop"),

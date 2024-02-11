@@ -28,6 +28,8 @@ final class Artiste
      */
      private array $musiques;
 
+    private ArtisteDB $modelDB;
+
      public function __construct(int $idArtiste, String $nomA, String $prenomA, String $imageArtiste, String $descriptionA, int $nbAuditeurs)
      {
         $this->idArtiste = $idArtiste;
@@ -38,6 +40,8 @@ final class Artiste
         $this->nbAuditeurs = $nbAuditeurs;
         $this->albums = [];
         $this->musiques = [];
+
+        $this->modelDB = new ArtisteDB();
      }
 
      public function getIdArtiste(): int
@@ -83,26 +87,31 @@ final class Artiste
      public function setNomA(String $nomA): void
      {
         $this->nomA = $nomA;
+        $this->updateArtiste();
      }
 
      public function setPrenomA(String $prenomA): void
      {
         $this->prenomA = $prenomA;
+        $this->updateArtiste();
      }
 
      public function setImage(String $image): void
      {
         $this->imageArtiste = $image;
+        $this->updateArtiste();
      }
 
-     public function descriptionA(String $descriptionA): void
+     public function setDescriptionA(String $descriptionA): void
      {
         $this->descriptionA = $descriptionA;
+        $this->updateArtiste();
      }
 
      public function addNbAuditeurs(): void
      {
         $this->nbAuditeurs += 1;
+        $this->updateArtiste();
      }
 
      public function addAlbum(Album $album): void
@@ -117,6 +126,7 @@ final class Artiste
         if ($index !== false) {
             unset($this->albums[$index]);
             $this->albums = array_values($this->albums);
+            $this->modelDB->removeAlbumArtiste($this->idArtiste, $idAlbum);
         }
      }
 
@@ -131,7 +141,23 @@ final class Artiste
 
         if ($index !== false) {
             unset($this->musiques[$index]);
-            $this->musiques = array_values($this->musiques);
         }
+     }
+
+     public function updateArtiste(): void
+     {
+        $this->modelDB->updateArtiste($this);
+     }
+
+     public function render(): String
+     {
+        $html = '<div class="artiste">';
+        $html .= '<img src="' . $this->imageArtiste . '" alt="Image de l\'artiste">';
+        $html .= '<h2>' . $this->nomA . ' ' . $this->prenomA . '</h2>';
+        $html .= '<p>' . $this->descriptionA . '</p>';
+        $html .= '<p>' . $this->nbAuditeurs . ' auditeurs</p>';
+        $html .= '</div>';
+
+        return $html;
      }
 }

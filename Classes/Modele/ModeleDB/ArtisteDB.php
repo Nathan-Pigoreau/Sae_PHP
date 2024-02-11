@@ -18,7 +18,7 @@ final class ArtisteDB
 
     public function __construct()
     {
-        $this->db = DataBase::getInstance;
+        $this->db = DataBase::getInstance();
     }
 
     public function getArtiste($idArtiste)
@@ -107,6 +107,24 @@ final class ArtisteDB
         $stmt->bindParam(':descriptionA', $artiste->getDescriptionA());
         $stmt->bindParam(':nbAuditeurs', $artiste->getNbAuditeurs());
         $stmt->bindParam(':idArtiste', $artiste->getIdArtiste());
+        $stmt->execute();
+    }
+
+    public function removeAlbumArtiste(int $idArtiste, int $idAlbum)
+    {
+        $query = "DELETE FROM ALBUM WHERE idArtiste = :idArtiste AND idAlbum = :idAlbum";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idArtiste', $idArtiste);
+        $stmt->bindParam(':idAlbum', $idAlbum);
+        $stmt->execute();
+    }
+
+    public function removeMusiqueArtiste(int $idArtiste, int $idMusique)
+    {
+        $query = "DELETE FROM MUSIQUE WHERE idArtiste = :idArtiste AND idMusique = :idMusique";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idArtiste', $idArtiste);
+        $stmt->bindParam(':idMusique', $idMusique);
         $stmt->execute();
     }
 

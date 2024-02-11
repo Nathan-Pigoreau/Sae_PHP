@@ -174,6 +174,26 @@ final class UtilisateurDB
 
         $query = "DELETE FROM CONTENIR WHERE idPlaylist = :idPlaylist";
     }
+
+    public function addNoteAlbum(int $idUser, int $idAlbum, int $note)
+    {
+        $query = "INSERT INTO NOTER (idUser, idAlbum, note) VALUES (:idUser, :idAlbum, :note)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $stmt->bindParam(":idAlbum", $idAlbum, PDO::PARAM_INT);
+        $stmt->bindParam(":note", $note, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function getNote(int $idUser, int $idAlbum)
+    {
+        $query = "SELECT note FROM NOTER WHERE idUser = :idUser AND idAlbum = :idAlbum";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $stmt->bindParam(":idAlbum", $idAlbum, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
 
 

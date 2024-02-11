@@ -17,7 +17,7 @@ final class AlbumDB
 
     public function __construct()
     {
-        $this->db = DataBase::getInstance;
+        $this->db = DataBase::getInstance();
     }
 
     public function getAlbums()
@@ -36,25 +36,13 @@ final class AlbumDB
 
     public function updateAlbum(Album $album)
     {
-        $query = "UPDATE ALBUM
-                  SET idAlbum = :idAlbum, idArtiste = :idArtiste, nomAlbum = :nomAlbum, date = :date, image = :image
-                  WHERE idAlbum = :idAlbum";
-
+        $query = "UPDATE ALBUM SET idArtiste = :idArtiste, nomAlbum = :nomAlbum, date = :date WHERE idAlbum = :idAlbum";
         $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':idAlbum', $album->getIdAlbum());
         $stmt->bindParam(':idArtiste', $album->getIdArtiste());
         $stmt->bindParam(':nomAlbum', $album->getNomAlbum());
         $stmt->bindParam(':date', $album->getRealeaseYear());
+        $stmt->bindParam(':idAlbum', $album->getIdAlbum());
         $stmt->execute();
-
-        foreach ($album->getGenres() as $genre)
-        {
-            $query = "INSERT INTO APARTENIR (idAlbum, idGenre) VALUES (:idAlbum, :idGenre)";
-            $stmt = $this->db->prepare($query);
-            $stmt->bindParam(':idAlbum', $album->getIdAlbum());
-            $stmt->bindParam(':idGenre', $genre);
-            $stmt->execute();
-        }
 
     }
 
@@ -126,19 +114,22 @@ final class AlbumDB
         return $genres;
     }
 
-    public function getImageAlbum(int $idAlbum)
+    public function addMusiqueAlbum(int $idAlbum, int $idMusique)
     {
-        $__IMAGE__ = new ImageDB();
-
-        $query = "SELECT idImage FROM ALBUM WHERE idAlbum = :idAlbum";
+        $query = "UPDATE MUSIQUE SET idAlbum = :idAlbum WHERE idMusique = :idMusique";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':idAlbum', $idAlbum);
+        $stmt->bindParam(':idMusique', $idMusique);
         $stmt->execute();
-        $imageData = $stmt->fetch(PDO::FETCH_ASSOC);
-        $image = $__IMAGE__->getImage($imageData['idImage']);
-        return $image;
     }
 
+    public function removeMusiqueAlbum(int $idAlbum, int $idMusique)
+    {
+        $query = "UPDATE MUSIQUE SET idAlbum = NULL WHERE idMusique = :idMusique";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idMusique', $idMusique);
+        $stmt->execute();
+    }
 
 
 }
