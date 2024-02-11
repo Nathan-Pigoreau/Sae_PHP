@@ -54,5 +54,33 @@ final class PlaylistDB
         return $musiques;
     }
 
+    public function updatePlaylist(Playlist $playlist)
+    {
+        $query = "UPDATE PLAYLIST SET nomPlaylist = :nomPlaylist, idUser = :idUser WHERE idPlaylist = :idPlaylist";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':nomPlaylist', $playlist->getNomPlaylist());
+        $stmt->bindParam(':idUser', $playlist->getIdUser());
+        $stmt->bindParam(':idPlaylist', $playlist->getIdPlaylist());
+        $stmt->execute();
+    }
+
+    public function addMusiquePlaylist(int $idPlaylist, int $idMusique)
+    {
+        $query = "INSERT INTO CONTENIR (idPlaylist, idMusique) VALUES (:idPlaylist, :idMusique)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idPlaylist', $idPlaylist);
+        $stmt->bindParam(':idMusique', $idMusique);
+        $stmt->execute();
+    }
+
+    public function removeMusiquePlaylist(int $idPlaylist, int $idMusique)
+    {
+        $query = "DELETE FROM CONTENIR WHERE idPlaylist = :idPlaylist AND idMusique = :idMusique";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idPlaylist', $idPlaylist);
+        $stmt->bindParam(':idMusique', $idMusique);
+        $stmt->execute();
+    }
+
 
 }

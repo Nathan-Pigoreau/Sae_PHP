@@ -47,6 +47,15 @@ final class AlbumDB
         $stmt->bindParam(':date', $album->getRealeaseYear());
         $stmt->execute();
 
+        foreach ($album->getGenres() as $genre)
+        {
+            $query = "INSERT INTO APARTENIR (idAlbum, idGenre) VALUES (:idAlbum, :idGenre)";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':idAlbum', $album->getIdAlbum());
+            $stmt->bindParam(':idGenre', $genre);
+            $stmt->execute();
+        }
+
     }
 
     public function deleteAlbum(int $idAlbum)
