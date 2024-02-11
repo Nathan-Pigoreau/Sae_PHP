@@ -55,7 +55,28 @@ final class GenreDB
         return $html;
     }
 
+    public function genreExists($idGenre): bool
+    {
+        $query = "SELECT * FROM GENRE WHERE idGenre = :idGenre";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idGenre', $idGenre);
+        $stmt->execute();
+        $genreData = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($genreData)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-
-
+    public function addGenre($nomGenre)
+    {
+        $query = "INSERT INTO GENRE (nomGenre) VALUES (:nomGenre)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':nomGenre', $nomGenre);
+        $stmt->execute();
+    }
 }

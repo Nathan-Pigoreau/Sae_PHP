@@ -59,4 +59,33 @@ final class MusiqueDB
         return $genres;
     }
 
+    public function musicExists($idMusique): bool
+    {
+        $query = "SELECT * FROM MUSIQUE WHERE idMusique = :idMusique";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idMusique', $idMusique);
+        $stmt->execute();
+        $musiqueData = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($musiqueData)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function addMusique($idArtiste, $nomMusique, $realeaseYear, $imageMusique, $idAlbum)
+    {
+        $query = "INSERT INTO MUSIQUE (idArtiste, nomMusique, realeaseYear, imageMusique, idAlbum) VALUES (:idArtiste, :nomMusique, :realeaseYear, :imageMusique, :idAlbum)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idArtiste', $idArtiste);
+        $stmt->bindParam(':nomMusique', $nomMusique);
+        $stmt->bindParam(':realeaseYear', $realeaseYear);
+        $stmt->bindParam(':imageMusique', $imageMusique);
+        $stmt->bindParam(':idAlbum', $idAlbum);
+        $stmt->execute();
+    }
+
 }

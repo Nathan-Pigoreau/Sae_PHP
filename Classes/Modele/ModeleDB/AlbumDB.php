@@ -130,6 +130,32 @@ final class AlbumDB
         return $image;
     }
 
+    public function albumExists(int $idAlbum): bool
+    {
+        $query = "SELECT * FROM ALBUM WHERE idAlbum = :idAlbum";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idAlbum', $idAlbum);
+        $stmt->execute();
+        $albumData = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($albumData)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
+    public function addAlbum(int $idArtiste, String $nomAlbum, date $date, int $idImage)
+    {
+        $query = "INSERT INTO ALBUM (idArtiste, nomAlbum, date, idImage) VALUES (:idArtiste, :nomAlbum, :date, :idImage)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idArtiste', $idArtiste);
+        $stmt->bindParam(':nomAlbum', $nomAlbum);
+        $stmt->bindParam(':date', $date);
+        $stmt->bindParam(':idImage', $idImage);
+        $stmt->execute();
+    }
 
 }
