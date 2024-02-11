@@ -102,6 +102,11 @@ final class Album
         $html .= '<h3>' . $this->genre . '</h3>';
         $html .= '<h3>' . $this->artiste . '</h3>';
         $html .= '</div>';
+        $html .= '<div class="album-musiques">';
+        foreach ($this->musiques as $musique)
+        {
+            $html .= $musique->render();
+        }
         $html .= '</div>';
         return $html;
     }

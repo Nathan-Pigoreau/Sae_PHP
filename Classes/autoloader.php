@@ -4,7 +4,6 @@ require_once 'Classes/Debug/dd.php';
  * Class Autoloader
  */
 class Autoloader{
-
     /**
      * Enregistre notre autoloader
      */

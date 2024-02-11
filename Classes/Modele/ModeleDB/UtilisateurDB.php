@@ -10,12 +10,6 @@ use Modele\DataBase;
 use Modele\ModeleDB\PlaylistDB;
 use Modele\ModeleDB\MusiqueDB;
 
-require_once(__DIR__ . '/../DataBase.php');
-require_once(__DIR__ . '/../Utilisateur.php');
-require_once(__DIR__ . '/../../autoloader.php');
-require_once(__DIR__ . '/PlaylistDB.php');
-require_once(__DIR__ . '/MusiqueDB.php');
-
 final class UtilisateurDB
 {
     private PDO $db;

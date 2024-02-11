@@ -117,6 +117,11 @@ CREATE TABLE APPARTENIR(
     FOREIGN KEY (idGenre) REFERENCES GENRE(idGenre)
 );
 
+-- Insertion des données :
+INSERT INTO GENRE (idGenre, nomGenre) VALUES 
+(1, "Pop"),
+(2, "Rap");
+
 
 
 

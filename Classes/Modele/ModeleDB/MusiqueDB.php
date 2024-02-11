@@ -10,10 +10,6 @@ use Modele\DataBase;
 use Modele\Musique;
 use Modele\ModeleDB\GenreDB;
 
-require_once(__DIR__ . '/../DataBase.php');
-require_once(__DIR__ . '/../Musique.php');
-require_once(__DIR__ . '/GenreDB.php');
-
 final class MusiqueDB
 {
     private PDO $db;

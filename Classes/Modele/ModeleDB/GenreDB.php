@@ -42,4 +42,20 @@ final class GenreDB
         return $genres;
     }
 
+    public function displayGenres(): String
+    {
+        $genres = $this->getGenres();
+        $html = "<div class='genres'>";
+        foreach ($genres as $genre)
+        {
+            $html .= $genre->render();
+        }
+        $html .= "</div>";
+
+        return $html;
+    }
+
+
+
+
 }
