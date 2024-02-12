@@ -59,14 +59,14 @@ final class MusiqueDB
         return $genres;
     }
 
-    public function musicExists($idMusique): bool
+    public function musiqueExists(String $nomMusique): bool
     {
-        $query = "SELECT * FROM MUSIQUE WHERE idMusique = :idMusique";
+        $query = "SELECT * FROM MUSIQUE WHERE nomMusique = :nomMusique";
         $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':idMusique', $idMusique);
+        $stmt->bindParam(':nomMusique', $nomMusique);
         $stmt->execute();
         $musiqueData = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($musiqueData)
+        if($musiqueData)
         {
             return true;
         }

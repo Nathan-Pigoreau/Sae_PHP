@@ -55,14 +55,14 @@ final class GenreDB
         return $html;
     }
 
-    public function genreExists($idGenre): bool
+    public function genreExists(String $nomGenre): bool
     {
-        $query = "SELECT * FROM GENRE WHERE idGenre = :idGenre";
+        $query = "SELECT * FROM GENRE WHERE nomGenre = :nomGenre";
         $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':idGenre', $idGenre);
+        $stmt->bindParam(':nomGenre', $nomGenre);
         $stmt->execute();
         $genreData = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($genreData)
+        if($genreData)
         {
             return true;
         }
@@ -73,10 +73,12 @@ final class GenreDB
     }
 
     public function addGenre($nomGenre)
-    {
-        $query = "INSERT INTO GENRE (nomGenre) VALUES (:nomGenre)";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':nomGenre', $nomGenre);
-        $stmt->execute();
+    {   
+        if (!$this->genreExists($nomGenre)){
+            $query = "INSERT INTO GENRE (nomGenre) VALUES (:nomGenre)";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':nomGenre', $nomGenre);
+            $stmt->execute();
+        }
     }
 }
