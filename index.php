@@ -10,9 +10,8 @@ require_once 'Configuration/config.php';
 
 // SPL autoloader
 require 'Classes/autoloader.php'; 
-Autoloader::register(); 
 // Template
-$template = new Template('Static/templates');
+$template = new Template('Templates');
 $template->setLayout('main');
 // $template->setContent($content);
 
