@@ -1,3 +1,4 @@
+-- SQLBook: Code
 PRAGMA foreign_keys = ON;
 
 -- Tables principales :
@@ -6,8 +7,8 @@ DROP TABLE IF EXISTS ARTISTE;
 CREATE TABLE ARTISTE(
     idArtiste INTEGER PRIMARY KEY AUTOINCREMENT,
     nomA TEXT NOT NULL,
-    prenomA TEXT NOT NULL,
-    descriptionA TEXT NOT NULL,
+    prenomA TEXT NOT NULL DEFAULT "Inconnu",
+    descriptionA TEXT NOT NULL DEFAULT "Aucune description",
     nbAuditeurs INTEGER NOT NULL DEFAULT 0
 );
 

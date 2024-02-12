@@ -1,5 +1,10 @@
 <?php
+declare(strict_types=1);
+
+namespace Classes;
+
 require_once 'Classes/Debug/dd.php';
+
 /**
  * Class Autoloader
  */
@@ -19,5 +24,4 @@ class Autoloader{
         $path = str_replace('\\', '/', $fqcn);
         require 'Classes/' . $path . '.php';
     }
-
 }

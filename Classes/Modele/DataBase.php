@@ -8,7 +8,7 @@ use PDO;
 
 require_once(__DIR__ . '/../../Configuration/config.php');
 
-class Database
+class DataBase
 {
     private static $instance = null;
     private $pdo;
