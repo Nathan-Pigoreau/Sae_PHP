@@ -12,7 +12,6 @@
         <!-- <h1>Accueil</h1> -->
         <p>Bienvenue sur Gaitunes, le site de streaming musical qui vous permet de créer et d'écouter vos playlists en ligne.</p>
         <p>Connectez-vous pour accéder à votre espace personnel.</p>
-    <?php include 'login.php'; ?>
     </main>
 </body>
 </html>

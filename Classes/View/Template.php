@@ -22,7 +22,7 @@ final class Template
     public function __construct(string $path)
     {
         $this->path = $path;
-        $this->layout = 'main';
+        $this->layout = '';
         $this->content = '';
     }
 
@@ -58,11 +58,11 @@ final class Template
     public function compile(): string
     {
         $content = $this->getContent();
-        ob_start();
-        require sprintf(
-            '%s/%s.php',
-            $this->getPath(),
-            $this->getLayout(),
+            ob_start();
+            require sprintf(
+                '%s/%s.php',
+                $this->getPath(),
+                $this->getLayout(),
         );
         return ob_get_clean();
     }
