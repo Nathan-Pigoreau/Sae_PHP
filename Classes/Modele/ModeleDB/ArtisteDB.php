@@ -127,5 +127,55 @@ final class ArtisteDB
         $stmt->bindParam(':idMusique', $idMusique);
         $stmt->execute();
     }
+    public function getArtisteIdByName($nomA) : int
+    {
+        $query = "SELECT idArtiste FROM ARTISTE WHERE nomA = :nomA";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':nomA', $nomA);
+        $stmt->execute();
+        $artisteData = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $artisteData['idArtiste'];
+    }
+
+    public function artisteExistsId(int $idArtiste): bool
+    {
+        $query = "SELECT * FROM ARTISTE WHERE idArtiste = :idArtiste";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idArtiste', $idArtiste);
+        $stmt->execute();
+        $artisteData = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($artisteData)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function artisteExists(String $nomArtiste): bool
+    {
+        $query = "SELECT * FROM ARTISTE WHERE nomA = :nomArtiste";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':nomArtiste', $nomArtiste);
+        $stmt->execute();
+        $artisteData = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($artisteData) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function addArtiste(String $nomA): void
+    {   
+        if(!$this->artisteExists($nomA)){
+            $query = "INSERT INTO ARTISTE (nomA) VALUES (:nomA)";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':nomA', $nomA);
+            $stmt->execute();
+        }
+    }
 
 }

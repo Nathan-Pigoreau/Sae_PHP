@@ -9,7 +9,6 @@ use Modele\Album;
 use Modele\DataBase;
 use Modele\ModeleDB\GenreDB;
 use Modele\ModeleDB\MusiqueDB;
-use Modele\ModeleDB\ImageDB;
 
 final class AlbumDB
 {
@@ -42,6 +41,7 @@ final class AlbumDB
         $stmt->bindParam(':nomAlbum', $album->getNomAlbum());
         $stmt->bindParam(':date', $album->getRealeaseYear());
         $stmt->bindParam(':idAlbum', $album->getIdAlbum());
+        $stmt->bindParam(':releaseYear', $album->getRealeaseYear());
         $stmt->execute();
 
     }
@@ -63,7 +63,7 @@ final class AlbumDB
         /** @var Image */
         $image = $this->getImageAlbum($idAlbum);
         
-        $album = new Album($albumData['idAlbum'], $albumData['idArtiste'], $albumData['nomAlbum'], $albumData['date']);
+        $album = new Album($albumData['idAlbum'], $albumData['idArtiste'], $albumData['nomAlbum'], $albumData['releaseYear']);
         //Initialisation des genres
         foreach ($genres as $genre)
         {
@@ -131,5 +131,49 @@ final class AlbumDB
         $stmt->execute();
     }
 
+    public function albumExists(String $nomAlbum): bool
+    {
+        $query = "SELECT * FROM ALBUM WHERE nomAlbum = :nomAlbum";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':nomAlbum', $nomAlbum);
+        $stmt->execute();
+        $albumData = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($albumData)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function albumExistsId(int $idAlbum): bool
+    {
+        $query = "SELECT * FROM ALBUM WHERE idAlbum = :idAlbum";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idAlbum', $idAlbum);
+        $stmt->execute();
+        $albumData = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($albumData) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function addAlbum(int $idArtiste, String $nomAlbum, int $idAlbum , int $releaseYear, String $imageAlbum)
+    {   
+        if (!$this->albumExistsId($idAlbum)){
+            $query = "INSERT INTO ALBUM (idArtiste, nomAlbum, idAlbum, imageAlbum, releaseYear) VALUES (:idArtiste, :nomAlbum, :idAlbum, :imageAlbum, :releaseYear)";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':idAlbum', $idAlbum);
+            $stmt->bindParam(':idArtiste', $idArtiste);
+            $stmt->bindParam(':nomAlbum', $nomAlbum);
+            $stmt->bindParam(':imageAlbum', $imageAlbum);
+            $stmt->bindParam(':releaseYear', $releaseYear);
+            $stmt->execute();
+        }
+    }
 
 }

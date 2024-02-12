@@ -17,7 +17,28 @@ final class PlaylistDB
     {
         $this->db = DataBase::getInstance();
     }
+    public function getPlaylists(){
+        $query = "SELECT * FROM PLAYLIST";
+        $stmt = $this->db->query($query);
+        $stmt->execute();
+        $playlistData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $playlist = [];
+        foreach ($PlaylistsData as $PlaylistData)
+        {
+            $this->getPlaylist($PlaylistData['idPlaylist']);
+        }
+    }
+    public function displayPlaylist(): String{
+        $playlist = $this->getPlaylists();
+        $html =  "<div class='playlist'>";
+        foreach ($playlistes as $playlist)
+        {
+            $html .= $playlist->render();
+        }
+        $html .= "</div>";
 
+        return $html;
+    }
     public function getPlaylist(int $idPlaylist)
     {
         
