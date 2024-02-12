@@ -14,6 +14,7 @@ require 'Classes/autoloader.php';
 $template = new Template('Templates');
 
 $routes = [
+    '/logout' => 'logout.php',
     '/login' => 'login.php',
     '/register' => 'register.php',
     '/' => 'main.php'

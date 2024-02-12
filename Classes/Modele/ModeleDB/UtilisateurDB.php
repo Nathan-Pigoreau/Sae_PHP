@@ -57,20 +57,23 @@ final class UtilisateurDB
 
 
     public function initNewUser(int $idUser, String $pseudo, String $mdp, String $email, String $descriptionUser, String $roleU): void
-    {
+    {   
+        session_start();
         $user = new Utilisateur($idUser, $pseudo, $mdp, $email, $descriptionUser, $roleU);
         $_SESSION['user'] = $user;
     }
 
     public function initUser(String $email)
-    {
+    {   
+        session_start();
         $userData = $this->getUserByEmail($email);
         $user = new Utilisateur($userData['idUser'], $userData['pseudo'], $userData['mdp'], $userData['email'], $userData['descriptionU'], $userData['roleU']);
         if ($userData['imageUser'] != null)
-            $user->setImage($userData['imageUser']);
-
+            $user->setPdp($userData['imageUser']);
+    
         $this->getUserPlaylist($userData['idUser']);
         $this->getUserFavoris($userData['idUser']);
+        $_SESSION['user'] = $user;
     }
 
     public function getUserByEmail(String $email)
