@@ -16,7 +16,8 @@ $template = new Template('Templates');
 $routes = [
     '/login' => 'login.php',
     '/register' => 'register.php',
-    '/' => 'main.php'
+    '/' => 'main.php',
+    '/playlists' => 'playlists.php'
 ];
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 

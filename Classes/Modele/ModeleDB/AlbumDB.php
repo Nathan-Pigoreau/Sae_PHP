@@ -176,4 +176,18 @@ final class AlbumDB
         }
     }
 
+    public function filtreGenre(String $genre){
+        $query = "SELECT * FROM ALBUM WHERE idAlbum IN (SELECT idAlbum FROM APARTENIR WHERE idGenre = (SELECT idGenre FROM GENRE WHERE nomGenre = :genre))";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':genre', $genre);
+        $stmt->execute();
+        $albumsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $albums = [];
+        foreach ($albumsData as $albumData)
+        {
+            $album = $this->getAlbum($albumData['idAlbum']);
+            array_push($albums, $album);
+        }
+        return $albums;
+    }
 }
