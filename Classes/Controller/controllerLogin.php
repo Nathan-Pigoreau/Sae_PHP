@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($__USER__->connexionUser($_POST['email'], $_POST['password'])) {
             header('Location: /');
         } else {
-            header('Location: login?error=1');
+            header('Location: /login?error=1');
         }
     }
 }

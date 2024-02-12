@@ -6,8 +6,8 @@ DROP TABLE IF EXISTS ARTISTE;
 CREATE TABLE ARTISTE(
     idArtiste INTEGER PRIMARY KEY AUTOINCREMENT,
     nomA TEXT NOT NULL,
-    prenomA TEXT NOT NULL,
-    descriptionA TEXT NOT NULL,
+    prenomA TEXT NOT NULL DEFAULT "Inconnu",
+    descriptionA TEXT NOT NULL DEFAULT "Pas de description",
     nbAuditeurs INTEGER NOT NULL DEFAULT 0
 );
 
@@ -126,8 +126,3 @@ CREATE TABLE NOTER(
     FOREIGN KEY (idUser) REFERENCES UTILISATEUR(idUser),
     FOREIGN KEY (idAlbum) REFERENCES ALBUM(idAlbum)
 );
-
--- Insertion des données :
-INSERT INTO GENRE (idGenre, nomGenre) VALUES 
-(1, "Pop"),
-(2, "Rap");
