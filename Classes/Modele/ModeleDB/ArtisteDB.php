@@ -110,6 +110,23 @@ final class ArtisteDB
         $stmt->execute();
     }
 
+    public function removeAlbumArtiste(int $idArtiste, int $idAlbum)
+    {
+        $query = "DELETE FROM ALBUM WHERE idArtiste = :idArtiste AND idAlbum = :idAlbum";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idArtiste', $idArtiste);
+        $stmt->bindParam(':idAlbum', $idAlbum);
+        $stmt->execute();
+    }
+
+    public function removeMusiqueArtiste(int $idArtiste, int $idMusique)
+    {
+        $query = "DELETE FROM MUSIQUE WHERE idArtiste = :idArtiste AND idMusique = :idMusique";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idArtiste', $idArtiste);
+        $stmt->bindParam(':idMusique', $idMusique);
+        $stmt->execute();
+    }
     public function getArtisteIdByName($nomA) : int
     {
         $query = "SELECT idArtiste FROM ARTISTE WHERE nomA = :nomA";
@@ -151,7 +168,6 @@ final class ArtisteDB
             return false;
         }
     }
-
     public function addArtiste(String $nomA): void
     {   
         if(!$this->artisteExists($nomA)){
@@ -161,4 +177,5 @@ final class ArtisteDB
             $stmt->execute();
         }
     }
+
 }

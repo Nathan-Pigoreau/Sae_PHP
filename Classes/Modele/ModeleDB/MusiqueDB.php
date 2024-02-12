@@ -88,4 +88,18 @@ final class MusiqueDB
         $stmt->execute();
     }
 
+    public function updateMusique(Musique $musique)
+    {
+        $query = "UPDATE MUSIQUE SET idAlbum = :idAlbum, idArtiste = :idArtiste, nomMusique = :nomMusique, realeaseYear = :realeaseYear, imageMusique = :imageMusique, nbVues = :nbVues WHERE idMusique = :idMusique";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idAlbum', $musique->getIdAlbum());
+        $stmt->bindParam(':idArtiste', $musique->getIdArtiste());
+        $stmt->bindParam(':nomMusique', $musique->getNomMusique());
+        $stmt->bindParam(':realeaseYear', $musique->getRealeaseYear());
+        $stmt->bindParam(':imageMusique', $musique->getImage());
+        $stmt->bindParam(':nbVues', $musique->getNbVues());
+        $stmt->bindParam(':idMusique', $musique->getIdMusique());
+        $stmt->execute();
+    }
+
 }

@@ -1,9 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Templates;
-
-require_once '../Classes/autoloader.php'; 
+namespace Templates; 
 ?>
 
 <!doctype html>

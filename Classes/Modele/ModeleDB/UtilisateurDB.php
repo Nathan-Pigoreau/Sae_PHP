@@ -116,6 +116,84 @@ final class UtilisateurDB
         }
     }
 
+    public function updateUser(Utilisateur $user)
+    {
+        $query = "UPDATE utilisateur SET pseudo = :pseudo, email = :email, mdp = :mdp, roleU = :roleU, descriptionU = :descriptionU, imageUser = :imageUser WHERE idUser = :idUser";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":pseudo", $user->getPseudo(), PDO::PARAM_STR);
+        $stmt->bindParam(":email", $user->getEmail(), PDO::PARAM_STR);
+        $stmt->bindParam(":mdp", $user->getMdp(), PDO::PARAM_STR);
+        $stmt->bindParam(":roleU", $user->getRoleU(), PDO::PARAM_STR);
+        $stmt->bindParam(":descriptionU", $user->getDescriptionU(), PDO::PARAM_STR);
+        $stmt->bindParam(":imageUser", $user->getImage(), PDO::PARAM_STR);
+        $stmt->bindParam(":idUser", $user->getIdUser(), PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function addFavoris(int $idUser, int $idMusique)
+    {
+        $query = "INSERT INTO APPRECIER (idUser, idMusique) VALUES (:idUser, :idMusique)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $stmt->bindParam(":idMusique", $idMusique, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function removeFavoris(int $idUser, int $idMusique)
+    {
+        $query = "DELETE FROM APPRECIER WHERE idUser = :idUser AND idMusique = :idMusique";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $stmt->bindParam(":idMusique", $idMusique, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function deleteUser(int $idUser)
+    {
+        $query = "DELETE FROM UTILISATEUR WHERE idUser = :idUser";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function addPlaylist(Playlist $playlist)
+    {
+        $query = "INSERT INTO PLAYLIST (nomPlaylist, idUser) VALUES (:nomPlaylist, :idUser)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":nomPlaylist", $playlist->getNomPlaylist(), PDO::PARAM_STR);
+        $stmt->bindParam(":idUser", $playlist->getIdUser(), PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function removePlaylist(int $idPlaylist)
+    {
+        $query = "DELETE FROM PLAYLIST WHERE idPlaylist = :idPlaylist";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":idPlaylist", $idPlaylist, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $query = "DELETE FROM CONTENIR WHERE idPlaylist = :idPlaylist";
+    }
+
+    public function addNoteAlbum(int $idUser, int $idAlbum, int $note)
+    {
+        $query = "INSERT INTO NOTER (idUser, idAlbum, note) VALUES (:idUser, :idAlbum, :note)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $stmt->bindParam(":idAlbum", $idAlbum, PDO::PARAM_INT);
+        $stmt->bindParam(":note", $note, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function getNote(int $idUser, int $idAlbum)
+    {
+        $query = "SELECT note FROM NOTER WHERE idUser = :idUser AND idAlbum = :idAlbum";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $stmt->bindParam(":idAlbum", $idAlbum, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
 
 

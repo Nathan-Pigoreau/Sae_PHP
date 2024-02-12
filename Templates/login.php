@@ -2,8 +2,7 @@
 declare(strict_types=1);
 
 namespace Templates;
-
-require_once '../Classes/autoloader.php'; 
+ 
 ?>
 
 <!doctype html>
@@ -22,7 +21,7 @@ require_once '../Classes/autoloader.php';
       <input placeholder="Password" id="password" name="password" type="password">
       <input value="Login" class="btn" type="submit">
     </form>
-  <p>Pas encore inscrit ?<a href="register.php"> Inscrivez-vous </a></p>
+  <p>Pas encore inscrit ?<a href="register"> Inscrivez-vous </a></p>
   <?php
       if (isset($_GET['error']) && $_GET['error'] === "1") {
           echo "<p>Identifiants incorrect</p>";

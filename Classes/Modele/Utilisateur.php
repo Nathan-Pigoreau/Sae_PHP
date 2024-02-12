@@ -22,7 +22,6 @@ final class Utilisateur
      * @var Musique[]
      */
     private array $favoris = [];
-
     /**
      * @var Playlist[]
      */

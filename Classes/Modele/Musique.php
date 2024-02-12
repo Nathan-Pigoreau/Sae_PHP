@@ -26,6 +26,8 @@ final class Musique
 
     private int $nbVues;
 
+    private MusiqueDB $modelDB;
+
     
     // Constructeur
 
@@ -39,6 +41,8 @@ final class Musique
         $this->image = $image;
         $this->genres = [];
         $this->nbVues = $nbVues;
+
+        $this->modelDB = new MusiqueDB();
     }
 
     // Getters
@@ -100,6 +104,11 @@ final class Musique
     public function setIdAlbum(int $idAlbum): void
     {
         $this->idAlbum = $idAlbum;
+    }
+
+    public function updateMusique(): void
+    {
+        $this->modelDB->updateMusique($this);
     }
 
     public function gender(): string

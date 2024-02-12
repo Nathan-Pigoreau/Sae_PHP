@@ -18,11 +18,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($user) {
             //Identifiants déjà utilisés, rediriger avec un message d'erreur
-            header("Location: ../../Templates/register.php?error=1");
+            header("Location: /register?error=1");
                 exit(); 
         } else {
             // Ajout de l'utilisateur
             $user = $__USER__->addUser($pseudo, $email, $password);
-            header("Location: ../../Templates/home.php");
+            header("Location: /");
             exit();
         }}}
