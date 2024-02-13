@@ -81,4 +81,14 @@ final class GenreDB
             $stmt->execute();
         }
     }
+
+    public function getGenreIdByName($nomGenre)
+    {
+        $query = "SELECT idGenre FROM GENRE WHERE nomGenre = :nomGenre";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':nomGenre', $nomGenre);
+        $stmt->execute();
+        $genreData = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $genreData['idGenre'];
+    }
 }

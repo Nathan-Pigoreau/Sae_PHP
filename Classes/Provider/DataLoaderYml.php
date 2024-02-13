@@ -59,13 +59,16 @@ class DataLoaderYml
                 $this->artisteDB->addArtiste($nomArtiste);
                 $this->artisteDB->addArtiste($parent);
                 $idArtiste = $this->artisteDB->getArtisteIdByName($nomArtiste);
+
+                $this->albumDB->addAlbum($idArtiste, $nomAlbum, (int)$entryId, (int)$releaseYear, $imageAlbum);
             
                 $genresArray = explode(",", $genres);
                 foreach ($genresArray as $nomGenre) {
                     $nomGenre = trim($nomGenre);
                     $this->genreDB->addGenre($nomGenre);
+                    $idGenre = $this->genreDB->getGenreIdByName($nomGenre);
+                    $this->albumDB->lierGenre((int)$entryId, $idGenre);
                 }
-                $this->albumDB->addAlbum($idArtiste, $nomAlbum, (int)$entryId, (int)$releaseYear, $imageAlbum);
             }
         }
         return "Data loaded successfully!";
