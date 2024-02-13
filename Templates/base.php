@@ -28,7 +28,7 @@
             </div>
             <div class="search">
                     <input type="search" id="search" name="search" placeholder="Rechercher un titre, un artiste, un album...">
-                    <a href="/Templates/login.php">Connexion</a>
+                    <a href="login">Connexion</a>
                     <img id='logo' src='/Static/images/logo.png' alt="Icone gaitunes">
             </div>
     </header>
