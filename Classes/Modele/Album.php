@@ -36,7 +36,8 @@ final class Album
         $this->idArtiste = $idArtiste;
         $this->nomAlbum = $nomAlbum;
         $this->releaseYear = $releaseYear;
-        $this ->image = $image;
+        if($image === null || $image == "null"){$this->image = "default.jpg";}
+        else{$this->image = $image;}
 
         $this->modelDB = new AlbumDB();
     }
@@ -138,7 +139,7 @@ final class Album
     {
         $html = '<div class="album">';
         $html .= '<div class="album-image">';
-        $html .= '<img src="'. __DIR__ ."../../Static/images". $this->image . '" alt="' . $this->nomAlbum . '">';
+        $html .= '<img src="'. '/Static/images/'. $this->image .'"' . '" alt="' . $this->nomAlbum . '">';
         $html .= '</div>';
         $html .= '<div class="album-infos">';
         $html .= '<h2>' . $this->nomAlbum . '</h2>';
