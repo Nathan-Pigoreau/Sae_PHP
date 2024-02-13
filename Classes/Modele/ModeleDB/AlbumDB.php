@@ -26,20 +26,23 @@ final class AlbumDB
         $albumsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         $albums = [];
-
+    
         foreach ($albumsData as $albumData)
         {
-            $this->getAlbum($albumData['idAlbum']);
+            $idAlbum = $albumData['idAlbum'];
+            $album = $this->getAlbum($idAlbum);
+            array_push($albums, $album);
         }
+    
+        return $albums;
     }
 
     public function updateAlbum(Album $album)
     {
-        $query = "UPDATE ALBUM SET idArtiste = :idArtiste, nomAlbum = :nomAlbum, date = :date WHERE idAlbum = :idAlbum";
+        $query = "UPDATE ALBUM SET idArtiste = :idArtiste, nomAlbum = :nomAlbum, idAlbum = :idAlbum, releaseYear :releaseYear WHERE idAlbum = :idAlbum";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':idArtiste', $album->getIdArtiste());
         $stmt->bindParam(':nomAlbum', $album->getNomAlbum());
-        $stmt->bindParam(':date', $album->getRealeaseYear());
         $stmt->bindParam(':idAlbum', $album->getIdAlbum());
         $stmt->bindParam(':releaseYear', $album->getRealeaseYear());
         $stmt->execute();
@@ -56,14 +59,21 @@ final class AlbumDB
 
     public function getAlbum($idAlbum)
     {
+
+        $query = "SELECT * FROM ALBUM WHERE idAlbum = :idAlbum";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idAlbum', $idAlbum);
+        $stmt->execute();
+        $albumData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $idAlbum = intval($idAlbum);
         /** @var Genre[] */
-        $genres = $this->getGenresAlbum($albumData['idAlbum']);
+        $genres = $this->getGenresAlbum($idAlbum);
         /** @var Musique[] */
         $musiques = $this->getMusiquesAlbum($idAlbum);
-        /** @var Image */
-        $image = $this->getImageAlbum($idAlbum);
         
-        $album = new Album($albumData['idAlbum'], $albumData['idArtiste'], $albumData['nomAlbum'], $albumData['releaseYear']);
+
+        $album = new Album($albumData['idAlbum'], $albumData['idArtiste'], $albumData['nomAlbum'], $albumData['releaseYear'],  $albumData['imageAlbum']);
         //Initialisation des genres
         foreach ($genres as $genre)
         {
@@ -96,11 +106,11 @@ final class AlbumDB
         return $musiques;
     }
 
-    public function getGenresAlbum(int $idAlbum): arrayGenre
+    public function getGenresAlbum(int $idAlbum)
     {
         $__GENRE__ = new GenreDB();
 
-        $query = "SELECT idGenre FROM APARTENIR WHERE idAlbum = :idAlbum";
+        $query = "SELECT idGenre FROM APPARTENIR WHERE idAlbum = :idAlbum";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':idAlbum', $idAlbum);
         $stmt->execute();
