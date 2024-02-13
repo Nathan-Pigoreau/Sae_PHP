@@ -17,7 +17,8 @@ $routes = [
     '/logout' => 'logout.php',
     '/login' => 'login.php',
     '/register' => 'register.php',
-    '/' => 'main.php'
+    '/' => 'main.php',
+    '/playlist' => 'playlists.php'
 ];
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
