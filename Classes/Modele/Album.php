@@ -14,7 +14,7 @@ final class Album
 
     private String $nomAlbum;
 
-    private date $realeaseYear;
+    private int $releaseYear;
 
     private String $image;
 
@@ -23,17 +23,20 @@ final class Album
      */
     private array $genres = [];
 
+    /**
+     * @var Musique[]
+     */
+    private array $musiques = [];
+
     private AlbumDB $modelDB;
 
-    public function __construct(int $idAlbum, int $idArtiste, String $nomAlbum, date $realseYear, Image $image)
+    public function __construct(int $idAlbum, int $idArtiste, String $nomAlbum, int $releaseYear, String $image)
     {
         $this->idAlbum = $idAlbum;
         $this->idArtiste = $idArtiste;
         $this->nomAlbum = $nomAlbum;
-        $this->realeaseYear = $realeaseYear;
-        $this->genres = [];
+        $this->releaseYear = $releaseYear;
         $this ->image = $image;
-        $this->musiques = [];
 
         $this->modelDB = new AlbumDB();
     }
@@ -53,9 +56,9 @@ final class Album
         return $this->nomAlbum;
     }
 
-    public function getRealeaseYear(): date
+    public function getRealeaseYear(): int
     {
-        return $this->realeaseYear;
+        return $this->releaseYear;
     }
 
     public function getIdGenre(): int
@@ -85,9 +88,9 @@ final class Album
         $this->updateAlbum();
     }
 
-    public function setRealeaseYear(date $realeaseYear): void
+    public function setRealeaseYear(int $realeaseYear): void
     {
-        $this->realeaseYear = $realeaseYear;
+        $this->releaseYear = $releaseYear;
         $this->updateAlbum();
     }
 
@@ -125,18 +128,21 @@ final class Album
     {
         $html = '<div class="album">';
         $html .= '<div class="album-image">';
-        $html .= '<img src="' . $this->image . '" alt="' . $this->nomAlbum . '">';
+        $html .= '<img src="'. __DIR__ ."../../Static/images". $this->image . '" alt="' . $this->nomAlbum . '">';
         $html .= '</div>';
         $html .= '<div class="album-infos">';
         $html .= '<h2>' . $this->nomAlbum . '</h2>';
-        $html .= '<h3>' . $this->realeaseYear . '</h3>';
-        $html .= '<h3>' . $this->genre . '</h3>';
-        $html .= '<h3>' . $this->artiste . '</h3>';
+        $html .= '<h3>' . $this->releaseYear . '</h3>';
+        $html .= '<h3>' . $this->idArtiste . '</h3>';
         $html .= '</div>';
         $html .= '<div class="album-musiques">';
         foreach ($this->musiques as $musique)
         {
             $html .= $musique->render();
+        }
+        foreach ($this->genres as $genre)
+        {
+            $html .= $genre->render();
         }
         $html .= '</div>';
         return $html;
