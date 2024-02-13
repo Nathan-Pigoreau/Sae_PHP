@@ -1,5 +1,7 @@
 <?php
-    session_start();
+    if (session_status() == PHP_SESSION_NONE){
+        session_start();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +22,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/playlist">Playlist</a>
+                            <a href="/playlists">Playlist</a>
                         </li>
                         <li>
                             <a href="/profil">Profil</a>

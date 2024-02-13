@@ -18,9 +18,19 @@ $routes = [
     '/login' => 'login.php',
     '/register' => 'register.php',
     '/' => 'main.php',
-    '/playlist' => 'playlists.php'
+    '/playlists' => 'playlists.php'
 ];
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$parts = explode('/', $uri);
+
+if ($parts[1] === 'playlist' && isset($parts[2]) && is_numeric($parts[2])) {
+    $id = intval($parts[2]);
+    $template->setLayout('base2');
+    $template->setContent('playlist.php');
+    echo $template->compile();
+} else {
+    $id = null;
+}
 
 if(isset($routes[$uri]))
 {

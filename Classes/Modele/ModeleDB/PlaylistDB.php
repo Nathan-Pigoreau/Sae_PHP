@@ -49,7 +49,7 @@ final class PlaylistDB
         $playlistData = $stmt->fetch(PDO::FETCH_ASSOC);
         $playlist = new Playlist($playlistData['idPlaylist'], $playlistData['nomPlaylist'], $playlistData['idUser']);
         
-        $musiques = $this->getMusiquesPlaylist($idPlaylist);
+        $musiques = $this->getMusiquesPlaylist((int)$idPlaylist);
         foreach ($musiques as $musique)
         {
             $playlist->addMusique($musique);
@@ -103,5 +103,36 @@ final class PlaylistDB
         $stmt->execute();
     }
 
+    public function ajouterPlaylist(string $nomPlaylist, int $idUser)
+    {
+        $query = "INSERT INTO PLAYLIST (nomPlaylist, idUser) VALUES (:nomPlaylist, :idUser)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':nomPlaylist', $nomPlaylist);
+        $stmt->bindParam(':idUser', $idUser);
+        $stmt->execute();
+        return true;
+    }
+
+    public function getPlaylistId(string $nomPlaylist)
+{
+    $query = "SELECT idPlaylist FROM PLAYLIST WHERE nomPlaylist = :nomPlaylist";
+    $stmt = $this->db->prepare($query);
+    $stmt->bindParam(':nomPlaylist', $nomPlaylist);
+    $stmt->execute();
+    $playlistData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($playlistData !== false && isset($playlistData['idPlaylist'])) {
+        return $playlistData['idPlaylist'];
+    } else {
+        throw new \Exception("Playlist not found with name: ". $nomPlaylist);
+        return null;
+    }
+}
+
+
+    public function initPlaylist(int $idPlaylist){
+        $playlist = $this->getPlaylist($idPlaylist);
+        $_SESSION['playlist'] = $playlist;
+    }
 
 }

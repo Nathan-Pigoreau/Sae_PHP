@@ -3,14 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter Playlist</title>
+    <title>Afficher Playlist</title>
 </head>
 <body>
-    <h1>Ajouter Playlist</h1>
-    <form action="../Classes/Controller/ControllerPlaylist.php" method="post">
-        <label for="nom_playlist">Nom de la playlist :</label>
-        <input type="text" id="nom_playlist" name="nom_playlist" required>
-        <button type="submit">Ajouter Playlist</button>
-    </form>
+    <h1>Playlist</h1>
+    <?php
+        session_start();
+
+        if (isset($_POST['playList'])) {
+            $playlist = $_POST['playList'];
+
+            // Assurez-vous que la classe Playlist a une méthode render()
+            // Utilisez la méthode render() pour afficher la playlist
+            echo $playlist->render();
+        } else {
+            echo "Erreur : Aucune playlist trouvée.";
+        }
+    ?>
 </body>
 </html>
