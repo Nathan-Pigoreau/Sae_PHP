@@ -2,17 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Classes\Provider;
+namespace Provider;
 
 use Modele\ModeleDB\AlbumDB;
 use Modele\ModeleDB\GenreDB;
 use Modele\ModeleDB\ArtisteDB;
-require_once __DIR__ . '/../Modele/ModeleDB/AlbumDB.php';
-require_once __DIR__ . '/../Modele/ModeleDB/GenreDB.php';
-require_once __DIR__ . '/../Modele/ModeleDB/ArtisteDB.php';
 use Modele\DataBase;
 use PDO;
-require_once __DIR__ . '/../Modele/DataBase.php';
+
+require __DIR__ . '/../autoloader.php';
 
 class DataLoaderYml
 {
