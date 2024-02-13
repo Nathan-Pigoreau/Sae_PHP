@@ -18,12 +18,6 @@ a{
     text-decoration: none;
     color: #333333;
 }
-
-img{
-    max-width: 30%;
-    max-height: 30%;
-
-}
 .nav{
     display: flex;
     min-height: 100%;
@@ -48,9 +42,11 @@ body{
     font-family: 'Georgia', serif;
 }
 #logo{
-    position: fixed;
-    transform: scale(0.3);
-    left: 80%;
+    /* position: fixed; */
+    /* transform: scale(0.3); */
+    max-width: 100px;
+    max-height: 100px;
+    /* left: 80%; */
 }
 .search p{
     display: inline;
@@ -62,6 +58,7 @@ body{
     display: flex;
     align-items: center;
     text-align: center;
+    justify-content: space-between;
     padding-top: 1%;
 }
 .search a{
