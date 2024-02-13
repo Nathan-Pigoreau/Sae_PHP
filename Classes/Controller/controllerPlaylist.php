@@ -10,7 +10,8 @@ require_once '../../Classes/autoloader.php';
 $__PLAYLIST__ = new PlaylistDB();
 
 session_start();
-$id_utilisateur_connecte = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+$user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+$id_utilisateur_connecte = $user ? $user->getIdUtilisateur() : null;
 
 if ($id_utilisateur_connecte) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
