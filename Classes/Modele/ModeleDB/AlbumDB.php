@@ -7,6 +7,8 @@ namespace Modele\ModeleDB;
 use PDO;
 use Modele\Album;
 use Modele\DataBase;
+use Modele\Musique;
+use Modele\Genre;
 use Modele\ModeleDB\GenreDB;
 use Modele\ModeleDB\MusiqueDB;
 
@@ -77,12 +79,12 @@ final class AlbumDB
         //Initialisation des genres
         foreach ($genres as $genre)
         {
-            $album->addGenre($genre['idGenre']);
+            $album->initGenre($genre);
         }
         //Initialisation des pistes
         foreach ($musiques as $musique)
         {
-            $album->addMusique($musique['idMusique']);
+            $album->initMusique($musique);
         }
 
         return $album;

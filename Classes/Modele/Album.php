@@ -94,6 +94,16 @@ final class Album
         $this->updateAlbum();
     }
 
+    public function initGenre(Genre $genre): void
+    {
+        $this->genres[] = $genre;
+    }
+
+    public function initMusique(Musique $musique): void
+    {
+        $this->musiques[] = $musique;
+    }
+
 
     public function addMusique(Musique $musique): void
     {
