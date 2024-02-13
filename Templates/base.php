@@ -22,8 +22,10 @@
                             <a href="/profil">Profil</a>
                         </li>
                         <li>
+                            Mes playlists
                         </li>    
                     </ul>
+                    
                 </nav>
             </div>
             <div class="search">
