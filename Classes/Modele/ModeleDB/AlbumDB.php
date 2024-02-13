@@ -186,4 +186,13 @@ final class AlbumDB
         }
     }
 
+    public function lierGenre(int $idAlbum, int $idGenre)
+    {
+        $query = "INSERT INTO APPARTENIR (idAlbum, idGenre) VALUES (:idAlbum, :idGenre)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idAlbum', $idAlbum);
+        $stmt->bindParam(':idGenre', $idGenre);
+        $stmt->execute();
+    }
+
 }
