@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +32,15 @@
             </div>
             <div class="search">
                     <input type="search" id="search" name="search" placeholder="Rechercher un titre, un artiste, un album...">
-                    <a href="login">Connexion</a>
+                    <?php 
+                        if(isset($_SESSION['user'])){
+                            echo '<p>Bonjour '.$_SESSION['user']->getPseudo().'</p>';
+                            echo '<a href="/logout">Déconnexion</a>';
+                        }
+                        else{
+                            echo '<a href="/login">Connexion</a>';
+                        }
+                    ?>
                     <img id='logo' src='/Static/images/logo.png' alt="Icone gaitunes">
             </div>
     </header>

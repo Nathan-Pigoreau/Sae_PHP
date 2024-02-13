@@ -23,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             // Ajout de l'utilisateur
             $user = $__USER__->addUser($pseudo, $email, $password);
+            $__USER__->initUser($_POST['email']);
             header("Location: /");
             exit();
         }}}

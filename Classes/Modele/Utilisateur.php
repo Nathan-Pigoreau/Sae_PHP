@@ -120,7 +120,7 @@ final class Utilisateur
         $this->roleU = $roleU;
     }
 
-    public function setPdp(Image $pdp): void
+    public function setPdp(String $pdp): void
     {
         $this->pdp = $pdp;
     }
