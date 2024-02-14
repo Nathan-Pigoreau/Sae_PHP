@@ -143,6 +143,16 @@ final class AlbumDB
         $stmt->execute();
     }
 
+    public function getNomArtiste(int $idArtiste): string
+    {
+        $query = "SELECT nomA FROM ARTISTE WHERE idArtiste = :idArtiste";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idArtiste', $idArtiste);
+        $stmt->execute();
+        $artisteData = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $artisteData['nomA'];
+    }
+
     public function albumExists(String $nomAlbum): bool
     {
         $query = "SELECT * FROM ALBUM WHERE nomAlbum = :nomAlbum";

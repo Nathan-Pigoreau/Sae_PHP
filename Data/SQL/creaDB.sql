@@ -5,7 +5,6 @@ PRAGMA foreign_keys = OFF;
 
 -- Tables de joINTure :
 DROP TABLE IF EXISTS CONTENIR;
-DROP TABLE IF EXISTS CREER;
 DROP TABLE IF EXISTS APPRECIER;
 DROP TABLE IF EXISTS CLASSER;
 DROP TABLE IF EXISTS REALISER;
@@ -13,12 +12,12 @@ DROP TABLE IF EXISTS APPARTENIR;
 DROP TABLE IF EXISTS NOTER;
 
 -- Tables principales :
+DROP TABLE IF EXISTS PLAYLIST;
 DROP TABLE IF EXISTS MUSIQUE;
 DROP TABLE IF EXISTS ALBUM;
 DROP TABLE IF EXISTS ARTISTE;
-DROP TABLE IF EXISTS GENRE;
 DROP TABLE IF EXISTS UTILISATEUR;
-DROP TABLE IF EXISTS PLAYLIST;
+DROP TABLE IF EXISTS GENRE;
 
 -- Activation des clés étrangères
 PRAGMA foreign_keys = ON;
@@ -32,6 +31,7 @@ CREATE TABLE ARTISTE(
     nomA TEXT NOT NULL,
     prenomA TEXT NOT NULL DEFAULT "Inconnu",
     descriptionA TEXT NOT NULL DEFAULT "Pas de description",
+    imageArtiste TEXT DEFAULT "defaultPDP.png",
     nbAuditeurs INTEGER NOT NULL DEFAULT 0
 );
 
@@ -39,7 +39,7 @@ CREATE TABLE ARTISTE(
 CREATE TABLE ALBUM(
     idAlbum INTEGER PRIMARY KEY AUTOINCREMENT,
     idArtiste INTEGER NOT NULL,
-    imageAlbum TEXT DEFAULT "default.png",
+    imageAlbum TEXT DEFAULT "default.jpg",
     nomAlbum TEXT NOT NULL,
     releaseYear INTEGER NOT NULL,
     FOREIGN KEY (idArtiste) REFERENCES ARTISTE(idArtiste)
@@ -50,7 +50,7 @@ CREATE TABLE MUSIQUE (
     idMusique INTEGER PRIMARY KEY AUTOINCREMENT,
     idAlbum INTEGER DEFAULT NULL,
     idArtiste INTEGER NOT NULL,
-    imageMusique TEXT DEFAULT "default.png",
+    imageMusique TEXT DEFAULT "default.jpg",
     nomMusique TEXT NOT NULL,
     releaseYear INTEGER NOT NULL,
     nbVues INTEGER NOT NULL DEFAULT 0,
@@ -66,7 +66,7 @@ CREATE TABLE UTILISATEUR(
     email TEXT NOT NULL,
     descriptionU TEXT NOT NULL,
     roleU TEXT NOT NULL DEFAULT 'USER',
-    imageUser TEXT DEFAULT "default.png"
+    imageUser TEXT DEFAULT "defaultPDP.png"
 );
 
 
@@ -85,16 +85,6 @@ CREATE TABLE GENRE(
 
 
 -- Tables de joINTEGERures :
-
-
-CREATE TABLE CREER(
-    idUser INTEGER NOT NULL,
-    idPlaylist INTEGER NOT NULL,
-    PRIMARY KEY (idUser, idPlaylist),
-    FOREIGN KEY (idUser) REFERENCES UTILISATEUR(idUser),
-    FOREIGN KEY (idPlaylist) REFERENCES PLAYLIST(idPlaylist)
-);
-
 
 CREATE TABLE CONTENIR(
     idPlaylist INTEGER NOT NULL,
@@ -149,3 +139,12 @@ CREATE TABLE NOTER(
     FOREIGN KEY (idUser) REFERENCES UTILISATEUR(idUser),
     FOREIGN KEY (idAlbum) REFERENCES ALBUM(idAlbum)
 );
+
+
+-- Insertion des données :
+
+INSERT INTO ARTISTE (nomA, prenomA, descriptionA, imageArtiste, nbAuditeurs) VALUES ("Artiste1", "Prenom1", "Description1", "defaultPDP.png", 0);
+
+INSERT INTO ALBUM (idArtiste, imageAlbum, nomAlbum, releaseYear) VALUES (1, "default.jpg", "Album1", 2021);
+
+INSERT INTO MUSIQUE (idAlbum, idArtiste, imageMusique, nomMusique, releaseYear, nbVues) VALUES (1, 1, "default.jpg", "Musique1", 2021, 0);

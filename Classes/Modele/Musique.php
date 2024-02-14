@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Modele;
 
+use Modele\ModeleDB\MusiqueDB;
+
 final class Musique
 {
     private int $idMusique;
@@ -14,7 +16,7 @@ final class Musique
 
     private String $nomMusique;
 
-    private date $realeaseYear;
+    private int $realeaseYear;
 
     
     private String $image;
@@ -31,7 +33,7 @@ final class Musique
     
     // Constructeur
 
-    public function __construct(int $idMusique, int $idArtiste, String $nomMusique, date $realeaseYear,Image $image, int $nbVues)
+    public function __construct(int $idMusique, int $idArtiste, String $nomMusique, int $realeaseYear, String $image, int $nbVues)
     {
         $this->idMusique = $idMusique;
         $this->idAlbum = null;
@@ -62,7 +64,7 @@ final class Musique
         return $this->nomMusique;
     }
 
-    public function getRealeaseYear(): date
+    public function getRealeaseYear(): int
     {
         return $this->realeaseYear;
     }
@@ -84,7 +86,7 @@ final class Musique
         $this->nomMusique = $nomMusique;
     }
 
-    public function setImage(Image $image): void
+    public function setImage(String $image): void
     {
         $this->image = $image;
     }
@@ -111,13 +113,31 @@ final class Musique
         $this->modelDB->updateMusique($this);
     }
 
-    public function gender(): string
+    public function render(): string
     {
         $html = "<div class='musique'>";
-        $html .= "<img src='" . $this->image . "' alt='image musique'>";
-        $html .= "<h2>" . $this->nomMusique . "</h2>";
+        $html .= '<img src="'. '/Static/images/'. $this->image . '" alt="' . $this->nomMusique . '">';
+        $html .= "<h2><a href='musique-details?id=" . $this->idMusique . "'>". $this->nomMusique . "</a></h2>";
         $html .= "<p>" . $this->realeaseYear . "</p>";
         $html .= "<p>" . $this->nbVues . "</p>";
+        $html .= "</div>";
+
+        return $html;
+    }
+
+    public function renderDetails(): string
+    {
+        $html = "<div class='musique-details'>";
+        $html .= $this->render();
+        $html .= "<h2>" . $this->modelDB->getNomArtiste($this->idArtiste) . "</h2>";
+        foreach ($this->genres as $genre) {
+            $html .= $genre->render() . " ";
+        }
+        if($this->idAlbum)
+        {
+            $album = $this->modelDB->getMusiqueAlbum($this->idAlbum);
+            $html .= $album->render();
+        }
         $html .= "</div>";
 
         return $html;

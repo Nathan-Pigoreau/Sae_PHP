@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Artiste;
+namespace Modele;
+
+use Modele\ModeleDB\ArtisteDB;
 
 final class Artiste
 {
@@ -130,7 +132,7 @@ final class Artiste
         }
      }
 
-     public function addMusiques(Musique $musique): void
+     public function addMusique(Musique $musique): void
      {
         $this->musiques[] = $musique;
      }
@@ -159,5 +161,31 @@ final class Artiste
         $html .= '</div>';
 
         return $html;
+     }
+
+     public function renderDetails(): String
+     {
+         $html = '<div class="artiste">';
+         $html .= '<img src="'. '/Static/images/'. $this->imageArtiste . '" alt="Photo artiste">';
+         $html .= '<h2>' . $this->nomA . ' ' . $this->prenomA . '</h2>';
+         $html .= '<p>' . $this->descriptionA . '</p>';
+         $html .= '<p>' . $this->nbAuditeurs . ' auditeurs</p>';
+         $html .= '<h3>Albums</h3>';
+         $html .= '<ul>';
+         foreach ($this->albums as $album)
+         {
+               $html .= '<li>' . $album->render() . '</li>';
+         }
+         $html .= '</ul>';
+         $html .= '<h3>Musiques</h3>';
+         $html .= '<ul>';
+         foreach ($this->musiques as $musique)
+         {
+               $html .= '<li>' . $musique->render() . '</li>';
+         }
+         $html .= '</ul>';
+         $html .= '</div>';
+   
+         return $html;
      }
 }
