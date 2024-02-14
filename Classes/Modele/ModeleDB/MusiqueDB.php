@@ -9,6 +9,7 @@ use PDO;
 use Modele\DataBase;
 use Modele\Musique;
 use Modele\ModeleDB\GenreDB;
+use Modele\ModeleDB\AlbumDB;
 
 final class MusiqueDB
 {
@@ -28,7 +29,7 @@ final class MusiqueDB
         $stmt->bindParam(':idMusique', $idMusique);
         $stmt->execute();
         $musiqueData = $stmt->fetch(PDO::FETCH_ASSOC);
-        $musique = new Musique($musiqueData['idMusique'], $musiqueData['idArtiste'], $musiqueData['nomMusique'], $musiqueData['realeaseYear'],$musiqueData['imageMusique'], $nbVues['nbVues']);
+        $musique = new Musique($musiqueData['idMusique'], $musiqueData['idArtiste'], $musiqueData['nomMusique'], $musiqueData['releaseYear'],$musiqueData['imageMusique'], $musiqueData['nbVues']);
         if($musiqueData['idAlbum'])
         {
             $musique->setIdAlbum($musiqueData['idAlbum']);
@@ -74,6 +75,39 @@ final class MusiqueDB
         {
             return false;
         }
+    }
+
+    public function isExist(int $idMusique): bool
+    {
+        $query = "SELECT * FROM MUSIQUE WHERE idMusique = :idMusique";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idMusique', $idMusique);
+        $stmt->execute();
+        $musiqueData = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($musiqueData)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function getNomArtiste($idArtiste): string
+    {
+        $query = "SELECT nomA FROM ARTISTE WHERE idArtiste = :idArtiste";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idArtiste', $idArtiste);
+        $stmt->execute();
+        $artisteData = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $artisteData['nomA'];
+    }
+
+    public function getMusiqueAlbum($idAlbum)
+    {
+        $__ALBUM__ = new AlbumDB();
+        return $__ALBUM__->getAlbum($idAlbum);
     }
 
     public function addMusique($idArtiste, $nomMusique, $realeaseYear, $imageMusique, $idAlbum)

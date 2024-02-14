@@ -24,15 +24,17 @@ final class ArtisteDB
     public function getArtiste($idArtiste)
     {
         /**@var Albums */
-        $albums = $this->getAlbumsArtiste();
+        $albums = $this->getAlbumsArtiste($idArtiste);
         /**@var Musiques */
-        $musiques = $this->getMusiquesArtiste();
+        $musiques = $this->getMusiquesArtiste($idArtiste);
 
         $query = "SELECT * FROM ARTISTE WHERE idArtiste = :idArtiste";
         $stmt = $this->db->query($query);
+        $stmt->bindParam(':idArtiste', $idArtiste);
+        $stmt->execute();
         $artisteData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        new Artiste($artisteData['idArtiste'], $artisteData['nomA'], $artisteData['prenomA'], $artisteData['imageArtiste'], $artisteData['descriptionA'], $artisteData['nbAuditeurs']);
+        $artiste = new Artiste($artisteData['idArtiste'], $artisteData['nomA'], $artisteData['prenomA'], $artisteData['imageArtiste'], $artisteData['descriptionA'], $artisteData['nbAuditeurs']);
 
         foreach ($albums as $album)
         {
@@ -175,6 +177,23 @@ final class ArtisteDB
             $stmt = $this->db->prepare($query);
             $stmt->bindParam(':nomA', $nomA);
             $stmt->execute();
+        }
+    }
+
+    public function isExist(int $idArtiste): bool
+    {
+        $query = "SELECT * FROM ARTISTE WHERE idArtiste = :idArtiste";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idArtiste', $idArtiste);
+        $stmt->execute();
+        $artisteData = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($artisteData)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

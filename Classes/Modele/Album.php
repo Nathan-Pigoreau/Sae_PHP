@@ -177,9 +177,10 @@ final class Album
         $html .= '<div class="album-details-infos">';
         $html .= '<h2>' . $this->nomAlbum . '</h2>';
         $html .= '<h3>' . $this->releaseYear . '</h3>';
+        $html .= '<h3> <a href="/artiste-details?id='. $this->idArtiste .'">' . $this->modelDB->getNomArtiste($this->idArtiste) . '</a></h3>';
         $html .= '</div>';
         $html .= '<div class="album-details-image">';
-        $html .= '<img src="'. '/Static/images/'. $this->image .'"' . '" alt="' . $this->nomAlbum . '">';
+        $html .= '<img src="'. '/Static/images/'. $this->image . '" alt="' . $this->nomAlbum . '">';
         $html .= '</div>';
         $html .= '<div class="album-details-musiques">';
         $html .= $this->getMusiquesRender();
