@@ -211,4 +211,18 @@ final class AlbumDB
         }
         return $albums;
     }
+
+    public function isExist($idAlbum): bool
+    {
+        $query = "SELECT * FROM ALBUM WHERE idAlbum = :idAlbum";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idAlbum', $idAlbum);
+        $stmt->execute();
+
+        if ($stmt->fetch(PDO::FETCH_ASSOC)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

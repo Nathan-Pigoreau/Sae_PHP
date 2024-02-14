@@ -36,7 +36,8 @@ final class Album
         $this->idArtiste = $idArtiste;
         $this->nomAlbum = $nomAlbum;
         $this->releaseYear = $releaseYear;
-        $this ->image = $image;
+        if($image === null || $image == "null"){$this->image = "default.jpg";}
+        else{$this->image = $image;}
 
         $this->modelDB = new AlbumDB();
     }
@@ -61,11 +62,6 @@ final class Album
         return $this->releaseYear;
     }
 
-    public function getIdGenre(): int
-    {
-        return $this->idGenre;
-    }
-
     public function getImage(): String
     {
         return $this->image;
@@ -74,6 +70,11 @@ final class Album
     public function getMusiques(): Array
     {
         return $this->musiques;
+    }
+
+    public function getGenres(): Array
+    {
+        return $this->genres;
     }
 
     public function setImage(String $image): void
@@ -138,22 +139,52 @@ final class Album
     {
         $html = '<div class="album">';
         $html .= '<div class="album-image">';
-        $html .= '<img src="'. __DIR__ ."../../Static/images". $this->image . '" alt="' . $this->nomAlbum . '">';
+        $html .= '<img src="'. '/Static/images/'. $this->image .'"' . '" alt="' . $this->nomAlbum . '">';
         $html .= '</div>';
         $html .= '<div class="album-infos">';
-        $html .= '<h2>' . $this->nomAlbum . '</h2>';
-        $html .= '<h3>' . $this->releaseYear . '</h3>';
-        $html .= '<h3>' . $this->idArtiste . '</h3>';
+        $html .= '<h2><a href="/album-details?id=' . $this->idAlbum . '">'. $this->nomAlbum . '</a></h2>';
         $html .= '</div>';
         $html .= '<div class="album-musiques">';
-        foreach ($this->musiques as $musique)
-        {
-            $html .= $musique->render();
-        }
+        $html .= '</div>';
+        return $html;
+    }
+
+    public function getGenresRender(): String
+    {
+        $html = '<div class="album-genres">';
         foreach ($this->genres as $genre)
         {
             $html .= $genre->render();
         }
+        $html .= '</div>';
+        return $html;
+    }
+
+    public function getMusiquesRender(): String
+    {
+        $html = '<div class="album-musiques">';
+        foreach ($this->musiques as $musique)
+        {
+            $html .= $musique->render();
+        }
+        $html .= '</div>';
+        return $html;
+    }
+
+    public function renderDetails(): String
+    {
+        $html = '<div class="album-details">';
+        $html .= '<div class="album-details-infos">';
+        $html .= '<h2>' . $this->nomAlbum . '</h2>';
+        $html .= '<h3>' . $this->releaseYear . '</h3>';
+        $html .= '</div>';
+        $html .= '<div class="album-details-image">';
+        $html .= '<img src="'. '/Static/images/'. $this->image .'"' . '" alt="' . $this->nomAlbum . '">';
+        $html .= '</div>';
+        $html .= '<div class="album-details-musiques">';
+        $html .= $this->getMusiquesRender();
+        $html .= '</div>';
+        $html .= $this->getGenresRender();
         $html .= '</div>';
         return $html;
     }

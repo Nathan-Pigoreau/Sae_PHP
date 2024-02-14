@@ -18,28 +18,54 @@ $routes = [
     '/login' => 'login.php',
     '/register' => 'register.php',
     '/' => 'main.php',
-    '/playlists' => 'playlists.php'
+    '/playlists' => 'playlists.php',
+    '/album-details' => 'details/album-details.php'
 ];
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $parts = explode('/', $uri);
 
-if ($parts[1] === 'playlist' && isset($parts[2]) && is_numeric($parts[2])) {
-    $id = intval($parts[2]);
-    $template->setLayout('base2');
-    $template->setContent('playlist.php');
-    echo $template->compile();
-} else {
-    $id = null;
-}
-
-if(isset($routes[$uri]))
+switch(isset($routes[$uri]))
 {
-    include __DIR__ . '/Templates/' . $routes[$uri];
-    $template->setLayout('base2');
-    $template->setContent('$routes[$uri]');
-    echo $template->compile();
-} else{
-    $template->setLayout('base');
-    $template->setContent('main.php');
-    echo $template->compile();
+    case '/logout':
+        include __DIR__ . '/Templates/' . $routes[$uri];
+        $template->setLayout('base2');
+        $template->setContent('$routes[$uri]');
+        echo $template->compile();
+        break;
+    case '/login':
+        include __DIR__ . '/Templates/' . $routes[$uri];
+        $template->setLayout('base2');
+        $template->setContent('$routes[$uri]');
+        echo $template->compile();
+        break;
+    case '/register':
+        include __DIR__ . '/Templates/' . $routes[$uri];
+        $template->setLayout('base2');
+        $template->setContent('$routes[$uri]');
+        echo $template->compile();
+        break;
+    case '/':
+        include __DIR__ . '/Templates/' . $routes[$uri];
+        $template->setLayout('base2');
+        $template->setContent('$routes[$uri]');
+        echo $template->compile();
+        break;
+    case '/playlists':
+        include __DIR__ . '/Templates/' . $routes[$uri];
+        $template->setLayout('base2');
+        $template->setContent('$routes[$uri]');
+        echo $template->compile();
+        break;
+    case '/album-details':
+        include __DIR__ . '/Templates/' . $routes[$uri];
+        $template->setLayout('base2');
+        $template->setContent('$routes[$uri]');
+        echo $template->compile();
+        break;
+    default:
+        include __DIR__ . '/Templates/main.php';
+        $template->setLayout('base2');
+        $template->setContent('main.php');
+        echo $template->compile();
+        break;
 }
