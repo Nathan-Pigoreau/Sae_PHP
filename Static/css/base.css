@@ -7,7 +7,7 @@ nav{
     width: 15%;
     min-height: 100%;
     display: inline;
-    /* border-right: 2px solid white; */
+    border-right: 2px solid #333333;
     margin-right: 5%;
     position: fixed;
     top: 0;
@@ -35,12 +35,16 @@ input{
     border-radius: 4px;
     margin-top: 1%;
     margin-right: 10%;
+    background-color: #212121;
+    position: sticky;
+}
+input:hover{
     background-color: #333333;
 }
 /* à remplir avec la bonne police  */
 body{
     font-family: 'Georgia', serif;
-    background-color: #121212;
+    background-color: #212121;
 }
 #logo{
     /* position: fixed; */
@@ -68,6 +72,9 @@ body{
     border-radius: 4px;
     padding: 5px;   
 }
+.search:hover a{
+    background-color: #333333;
+}
 main,p{
-    padding-left: 20% ;
+    padding-left: 15% ;
 }

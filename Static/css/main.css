@@ -2,17 +2,26 @@ p:last-child{
     margin: 15%;
     margin-left: 30%;
 }
+main section{
+    background-color: #333333;
+    padding: 3%;
+}
 .album{
-    background-color: #212121;
-    margin: 3%;
-    border: solid #212121 20px;
+    background-color: #535353;
+    border: solid #333333 20px;
     border-radius: 25px;
     display: flex;
     align-items: center;
+    padding-right: 3%;
+    flex-basis: 25%;
 }
 .albums{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-items: stretch;
+    flex-basis: 21%;
+    flex-grow: 1;
 }
 .albums h2 a{
     padding-left: 10%;
@@ -27,4 +36,7 @@ body{
 .imgalbum{
     max-width: 100px;
     max-height: auto;
+}
+.album:hover{
+    background-color: #212121;
 }
