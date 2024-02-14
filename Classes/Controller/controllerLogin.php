@@ -5,7 +5,7 @@ use Modele\ModeleDB\UtilisateurDB;
 use Modele\Utilisateur;
 use View\Template;
 
-require_once '../../Classes/autoloader.php';
+require_once '../autoloader.php';
 
 $__USER__ = new UtilisateurDB();
 

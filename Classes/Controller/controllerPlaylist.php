@@ -5,7 +5,7 @@ namespace Controller;
 
 use Modele\ModeleDB\PlaylistDB;
 
-require_once '../../Classes/autoloader.php';
+require_once '../autoloader.php';
 
 $__PLAYLIST__ = new PlaylistDB();
 
