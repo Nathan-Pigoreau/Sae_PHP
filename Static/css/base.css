@@ -7,16 +7,16 @@ nav{
     width: 15%;
     min-height: 100%;
     display: inline;
-    border-right: 2px solid #333333;
+    /* border-right: 2px solid white; */
     margin-right: 5%;
     position: fixed;
     top: 0;
     left: 0;
-
+    background-color: #212121;
 }
 a{
     text-decoration: none;
-    color: #333333;
+    color: white;
 }
 .nav{
     display: flex;
@@ -33,13 +33,14 @@ input{
     flex-grow: 0;
     border: 1px solid ;
     border-radius: 4px;
-    color: #333333;
+    /* color: #333333; */
     margin-top: 1%;
     margin-right: 10%;
 }
 /* à remplir avec la bonne police  */
 body{
     font-family: 'Georgia', serif;
+    background-color: #121212;
 }
 #logo{
     /* position: fixed; */

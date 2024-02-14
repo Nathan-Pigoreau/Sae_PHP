@@ -2,3 +2,21 @@ p:last-child{
     margin: 15%;
     margin-left: 30%;
 }
+.album{
+    background-color: #212121;
+    /* background-color: red; */
+    margin: 3%;
+    border: solid #212121 20px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.albums{
+    display: flex;
+    flex-direction: row;
+}
+.albums h2{
+    padding-top: 20%;
+text-align: center;
+}

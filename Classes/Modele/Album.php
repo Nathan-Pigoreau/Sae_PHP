@@ -146,6 +146,7 @@ final class Album
         $html .= '</div>';
         $html .= '<div class="album-musiques">';
         $html .= '</div>';
+        $html .= '</div>';
         return $html;
     }
 
