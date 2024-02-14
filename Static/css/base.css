@@ -12,11 +12,11 @@ nav{
     position: fixed;
     top: 0;
     left: 0;
-
+    background-color: #212121;
 }
 a{
     text-decoration: none;
-    color: #333333;
+    color: white;
 }
 .nav{
     display: flex;
@@ -33,13 +33,18 @@ input{
     flex-grow: 0;
     border: 1px solid ;
     border-radius: 4px;
-    color: #333333;
     margin-top: 1%;
     margin-right: 10%;
+    background-color: #212121;
+    position: sticky;
+}
+input:hover{
+    background-color: #333333;
 }
 /* à remplir avec la bonne police  */
 body{
     font-family: 'Georgia', serif;
+    background-color: #212121;
 }
 #logo{
     /* position: fixed; */
@@ -51,6 +56,7 @@ body{
 .search p{
     display: inline;
     margin-right: 10%;
+    
 }
 
 .search{
@@ -66,6 +72,9 @@ body{
     border-radius: 4px;
     padding: 5px;   
 }
+.search a:hover{
+    background-color: #333333;
+}
 main,p{
-    padding-left: 20% ;
+    padding-left: 15% ;
 }
