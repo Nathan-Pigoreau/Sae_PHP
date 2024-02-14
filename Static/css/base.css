@@ -33,9 +33,9 @@ input{
     flex-grow: 0;
     border: 1px solid ;
     border-radius: 4px;
-    /* color: #333333; */
     margin-top: 1%;
     margin-right: 10%;
+    background-color: #333333;
 }
 /* à remplir avec la bonne police  */
 body{
@@ -52,6 +52,7 @@ body{
 .search p{
     display: inline;
     margin-right: 10%;
+    
 }
 
 .search{

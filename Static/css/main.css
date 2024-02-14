@@ -4,13 +4,11 @@ p:last-child{
 }
 .album{
     background-color: #212121;
-    /* background-color: red; */
     margin: 3%;
     border: solid #212121 20px;
     border-radius: 25px;
     display: flex;
     align-items: center;
-    /* justify-content: center; */
 }
 .albums{
     display: flex;
@@ -25,4 +23,8 @@ p:last-child{
 }
 body{
     color: white;
+}
+.imgalbum{
+    max-width: 100px;
+    max-height: auto;
 }

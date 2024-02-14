@@ -29,6 +29,7 @@ $__ALBUM__ = new AlbumDB();
             <div class="albums">
                 <?php
                     $albums = $__ALBUM__->getAlbums();
+                    $albums = array_slice($albums, 0, 5);
                     foreach ($albums as $album) {
                         echo $album->render();
                     }

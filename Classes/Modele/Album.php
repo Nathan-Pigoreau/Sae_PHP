@@ -139,7 +139,7 @@ final class Album
     {
         $html = '<div class="album">';
         $html .= '<div class="album-image">';
-        $html .= '<img src="'. '/Static/images/'. $this->image .'"' . '" alt="' . $this->nomAlbum . '">';
+        $html .= '<img class="imgalbum" src="'. '/Static/images/'. $this->image .'"' . '" alt="' . $this->nomAlbum . '">';
         $html .= '</div>';
         $html .= '<div class="album-infos">';
         $html .= '<h2><a href="/album-details?id=' . $this->idAlbum . '">'. $this->nomAlbum . '</a></h2>';
