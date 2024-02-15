@@ -28,8 +28,6 @@ final class Musique
 
     private int $nbVues;
 
-    private MusiqueDB $modelDB;
-
     
     // Constructeur
 
@@ -44,7 +42,6 @@ final class Musique
         $this->genres = [];
         $this->nbVues = $nbVues;
 
-        $this->modelDB = new MusiqueDB();
     }
 
     // Getters
@@ -110,7 +107,8 @@ final class Musique
 
     public function updateMusique(): void
     {
-        $this->modelDB->updateMusique($this);
+        $modelDB = new MusiqueDB();
+        $modelDB->updateMusique($this);
     }
 
     public function render(): string
@@ -138,16 +136,25 @@ final class Musique
 
     public function renderDetails(): string
     {
+        $modelDB = new MusiqueDB();
+
+        if($_SESSION['user'] && $modelDB->isFavoris($_SESSION['user']->getIdUser(), $this->idMusique)){
+            $like = "Logo_like.png";
+        }
+        else{
+            $like = "Logo_like_2.png";
+        }
+
         $html = "<div class='musique-details'>";
         $html .= $this->render();
-        $html .= "<h2>" . $this->modelDB->getNomArtiste($this->idArtiste) . "</h2>";
+        $html .= "<h2>" . $modelDB->getNomArtiste($this->idArtiste) . "</h2>";
         foreach ($this->genres as $genre) {
             $html .= $genre->render() . " ";
         }
-        $html .= "<button class='like-button' data-id='" . $this->idMusique . "'><img class='like' src='/Static/images/Logo_like.png' alt='bouton_like'></button>";
+        $html .= "<button class='like-button' data-id='" . $this->idMusique . "'><img class='like' src='/Static/images/" . $like . "' alt='bouton_like'></button>";
         if($this->idAlbum)
         {
-            $album = $this->modelDB->getMusiqueAlbum($this->idAlbum);
+            $album = $modelDB->getMusiqueAlbum($this->idAlbum);
             $html .= $album->render();
         }
         $html .= "</div>";

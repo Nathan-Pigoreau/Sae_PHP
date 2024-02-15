@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Modele;
 
-use Modele\ModeleDB\UtilisateurDB;
-
 final class Utilisateur
 {
     private int $idUser;
@@ -32,7 +30,6 @@ final class Utilisateur
     
     private String $pdp;
 
-    private UtilisateurDB $modelDB;
     // Constructeur
 
     public function __construct(int $idUser, String $pseudo, String $mdp, String $email, String $descriptionUser, String $roleU)
@@ -46,8 +43,6 @@ final class Utilisateur
         $this->pdp = "defaultPDP.png";
         $this->favoris = [];
         $this->playlists = [];
-
-        $this->modelDB = new UtilisateurDB();
     }
 
     // Getters
@@ -129,15 +124,13 @@ final class Utilisateur
         $this->pdp = $pdp;
     }
 
-    public function addFavoris(int $idmusique): void
+    public function addFavoris(Musique $musique): void
     {
-        $this->modelDB->addFavoris($this->idUser, $idmusique);
-        $this->favoris = $this->modelDB->getMusique($idmusique);
+       $this->favoris[] = $musique; // Ajoute la musique à la liste des favoris
     }
 
     public function removeFavoris(int $idmusique): void
     {
-        $this->modelDB->removeFavoris($this->idUser, $idmusique);
         $key = array_search($idmusique, array_column($this->favoris, 'idMusique'));
         if ($key !== false) {
             unset($this->favoris[$key]); // Supprime la musique de la liste des favoris

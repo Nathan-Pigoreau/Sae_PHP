@@ -120,6 +120,24 @@ final class MusiqueDB
         return $artisteData['nomA'];
     }
 
+    public function isFavoris(int $idUser, int $idMusique): bool
+    {
+        $query = "SELECT * FROM APPRECIER WHERE idUser = :idUser AND idMusique = :idMusique";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $stmt->bindParam(":idMusique", $idMusique, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        if($stmt->fetch(PDO::FETCH_ASSOC))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public function getMusiqueAlbum($idAlbum)
     {
         $__ALBUM__ = new AlbumDB();

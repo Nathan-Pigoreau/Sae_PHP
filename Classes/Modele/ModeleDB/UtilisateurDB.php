@@ -58,7 +58,6 @@ final class UtilisateurDB
 
     public function initNewUser(int $idUser, String $pseudo, String $mdp, String $email, String $descriptionUser, String $roleU): void
     {   
-        session_start();
         $user = new Utilisateur($idUser, $pseudo, $mdp, $email, $descriptionUser, $roleU);
         $_SESSION['user'] = $user;
     }
@@ -103,17 +102,13 @@ final class UtilisateurDB
         $stmt->execute();
         $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $playlists = [];
-
         foreach ($stmt as $playlistData) {
             $playlist = $__PLAYLIST__->getPlaylist($playlistData['idPlaylist']);
-            $playlists[] = $playlist;
+            $user->addPlaylist($playlist);
         }
-
-        return $playlists;
     }
 
-    public function getUserFavoris(int $idUser)
+    public function getUserFavoris(int $idUser):void
     {   
         $__MUSIQUE__ = new MusiqueDB();
 
@@ -123,14 +118,10 @@ final class UtilisateurDB
         $stmt->execute();
         $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $favoris = [];
-
         foreach ($stmt as $favoriData) {
-            $favori = $__MUSIQUE__->getMusique($favoriData['idMusique']);
-            $favoris[] = $favori;
+            $favori = getMusique($favoriData['idMusique']);
+            $user->addFavori($favori);
         }
-
-        return $favoris;
     }
 
     public function updateUser(Utilisateur $user)
@@ -224,7 +215,6 @@ final class UtilisateurDB
         $stmt->bindParam(":idUser", $idUser, PDO::PARAM_INT);
         $stmt->bindParam(":idMusique", $idMusique, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
 
         if($stmt->fetch(PDO::FETCH_ASSOC))
         {
