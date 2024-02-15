@@ -124,6 +124,17 @@ final class Musique
 
         return $html;
     }
+    public function renderaccueil(): string{
+        $html = "<div class='musique'>";
+        $html .= '<img class = "imgmusique" src="'. '/Static/images/'. $this->image . '" alt="' . $this->nomMusique . '">';
+        $html .= "<div class='musique-details'>";
+        $html .= "<h2><a href='musique-details?id=" . $this->idMusique . "'>". $this->nomMusique . "</a></h2>";
+        // $html .= "<p>" . $this->realeaseYear . "</p>";
+        $html .= "</div>";
+        $html .= "</div>";
+        return $html;
+
+    }
 
     public function renderDetails(): string
     {
