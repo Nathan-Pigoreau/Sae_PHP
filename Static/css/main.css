@@ -69,3 +69,16 @@ body{
 .toutmusique {
     padding-left: 80%;
 }
+
+.like-button {
+    background-color: #333333;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+}
+
+.like{
+    width: 10vh;
+    height: 10vh;
+}

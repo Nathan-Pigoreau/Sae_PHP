@@ -71,8 +71,16 @@ final class UtilisateurDB
         if ($userData['imageUser'] != null)
             $user->setPdp($userData['imageUser']);
     
-        $this->getUserPlaylist($userData['idUser']);
-        $this->getUserFavoris($userData['idUser']);
+        $playlist = $this->getUserPlaylist($userData['idUser']);
+        foreach($playlist as $playlist)
+        {
+            $user->addPlaylist($playlist);
+        }
+        $favoris = $this->getUserFavoris($userData['idUser']);
+        foreach($favoris as $favoris)
+        {
+            $user->addFavoris($favoris);
+        }
         $_SESSION['user'] = $user;
     }
 
@@ -88,7 +96,6 @@ final class UtilisateurDB
     public function getUserPlaylist(int $idUser)
     {   
         $__PLAYLIST__ = new PlaylistDB();
-        $user = $_SESSION['user'];
 
         $query = "SELECT * FROM PLAYLIST WHERE idUser = :idUser";
         $stmt = $this->db->prepare($query);
@@ -96,16 +103,19 @@ final class UtilisateurDB
         $stmt->execute();
         $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        $playlists = [];
+
         foreach ($stmt as $playlistData) {
             $playlist = $__PLAYLIST__->getPlaylist($playlistData['idPlaylist']);
-            $user->addPlaylist($playlist);
+            $playlists[] = $playlist;
         }
+
+        return $playlists;
     }
 
-    public function getUserFavoris(int $idUser):void
+    public function getUserFavoris(int $idUser)
     {   
         $__MUSIQUE__ = new MusiqueDB();
-        $user = $_SESSION['user'];
 
         $query = "SELECT * FROM APPRECIER WHERE idUser = :idUser";
         $stmt = $this->db->prepare($query);
@@ -113,10 +123,14 @@ final class UtilisateurDB
         $stmt->execute();
         $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        $favoris = [];
+
         foreach ($stmt as $favoriData) {
-            $favori = getMusique($favoriData['idMusique']);
-            $user->addFavori($favori);
+            $favori = $__MUSIQUE__->getMusique($favoriData['idMusique']);
+            $favoris[] = $favori;
         }
+
+        return $favoris;
     }
 
     public function updateUser(Utilisateur $user)
@@ -197,6 +211,31 @@ final class UtilisateurDB
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function getMusique(int $idMusique){
+        $__MUSIQUE__ = new MusiqueDB();
+        return $__MUSIQUE__->getMusique($idMusique);
+    }
+
+    public function isFavoris(int $idUser, int $idMusique): bool
+    {
+        $query = "SELECT * FROM APPRECIER WHERE idUser = :idUser AND idMusique = :idMusique";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $stmt->bindParam(":idMusique", $idMusique, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if($stmt->fetch(PDO::FETCH_ASSOC))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 }
 
 

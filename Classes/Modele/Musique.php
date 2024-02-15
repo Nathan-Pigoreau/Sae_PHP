@@ -144,6 +144,7 @@ final class Musique
         foreach ($this->genres as $genre) {
             $html .= $genre->render() . " ";
         }
+        $html .= "<button class='like-button' data-id='" . $this->idMusique . "'><img class='like' src='/Static/images/Logo_like.png' alt='bouton_like'></button>";
         if($this->idAlbum)
         {
             $album = $this->modelDB->getMusiqueAlbum($this->idAlbum);

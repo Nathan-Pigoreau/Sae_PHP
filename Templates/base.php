@@ -35,6 +35,7 @@
             <div class="search">
                     <input type="search" id="search" name="search" placeholder="Rechercher un titre, un artiste, un album...">
                     <?php 
+                        var_dump($_SESSION);
                         if(isset($_SESSION['user'])){
                             echo '<p>Bonjour '.$_SESSION['user']->getPseudo().'</p>';
                             echo '<a href="/logout">Déconnexion</a>';
