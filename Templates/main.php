@@ -34,7 +34,7 @@ $__MUSIQUE__ = new MusiqueDB();
                         echo $album->render();
                     }
                 ?>
-                <a href="#"> Voir tous les albums</a> 
+                <a href="albums"> Voir tous les albums</a> 
             </div>
             <h2>Musiques</h2>
             <div class="musiques">
@@ -45,7 +45,7 @@ $__MUSIQUE__ = new MusiqueDB();
                         echo $musique->renderaccueil();
                     }
                 ?>
-                <a class = 'toutmusique' href="#"> Voir toutes les musiques</a>
+                <a class = 'toutmusique' href="musiques"> Voir toutes les musiques</a>
         </section>
     </main>
 </body>

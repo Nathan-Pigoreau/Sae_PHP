@@ -21,7 +21,9 @@ $routes = [
     '/playlists' => 'playlists.php',
     '/album-details' => 'details/album-details.php',
     '/artiste-details' => 'details/artiste-details.php',
-    '/musique-details' => 'details/musique-details.php'
+    '/musique-details' => 'details/musique-details.php',
+    '/musiques' => 'musiques.php',
+    '/albums' => 'albums.php'
 
 ];
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -71,13 +73,19 @@ switch(isset($routes[$uri]))
         $template->setContent('$routes[$uri]');
         echo $template->compile();
         break;
-    case '/artiste-details':
+    case '/musique-details':
         include __DIR__ . '/Templates/' . $routes[$uri];
         $template->setLayout('base2');
         $template->setContent('$routes[$uri]');
         echo $template->compile();
         break;
-    case '/artiste-details':
+    case '/albums':
+        include __DIR__ . '/Templates/' . $routes[$uri];
+        $template->setLayout('base2');
+        $template->setContent('$routes[$uri]');
+        echo $template->compile();
+        break;
+    case '/musiques':
         include __DIR__ . '/Templates/' . $routes[$uri];
         $template->setLayout('base2');
         $template->setContent('$routes[$uri]');
