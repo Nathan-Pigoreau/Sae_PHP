@@ -16,7 +16,7 @@ namespace Templates;
 <div class="login wrap">
   <h1>LOGIN</h1>
   <div class="h1"></div>
-    <form action="../Classes/Controller/ControllerLogin.php" method="POST">
+    <form action="../Classes/Controller/controllerLogin.php" method="POST">
       <input placeholder="Email" id="email" name="email" type="email">
       <input placeholder="Password" id="password" name="password" type="password">
       <input value="Login" class="btn" type="submit">

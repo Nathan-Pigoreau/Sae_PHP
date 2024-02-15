@@ -15,7 +15,7 @@ namespace Templates;
 <div class="login wrap">
   <h1>REGISTER</h1>
   <div class="h1"></div>
-    <form action="../Classes/Controller/ControllerRegister.php" method="POST">
+    <form action="../Classes/Controller/controllerRegister.php" method="POST">
       <input placeholder="Pseudo" id="pseudo" name="pseudo" type="text">
       <input placeholder="Email" id="email" name="email" type="email">
       <input placeholder="Password" id="password" name="password" type="password">
