@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Templates;
 
 use Modele\ModeleDB\AlbumDB;
-
+use Modele\ModeleDB\MusiqueDB;
 $__ALBUM__ = new AlbumDB();
-
+$__MUSIQUE__ = new MusiqueDB();
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +34,19 @@ $__ALBUM__ = new AlbumDB();
                         echo $album->render();
                     }
                 ?>
+                <a href="albums"> Voir tous les albums</a> 
             </div>
+            <h2>Musiques</h2>
+            <div class="musiques">
+                <?php
+                    $musiques = $__MUSIQUE__->getMusiques();
+                    $musiques = array_slice($musiques, 0, 6);
+                    foreach ($musiques as $musique) {
+                        echo $musique->renderaccueil();
+                    }
+                ?>
+                <a class = 'toutmusique' href="musiques"> Voir toutes les musiques</a>
+        </section>
     </main>
 </body>
 </html>

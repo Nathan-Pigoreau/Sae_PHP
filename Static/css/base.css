@@ -31,12 +31,13 @@ input{
     height: 10%;
     width: 30%;
     flex-grow: 0;
-    border: 1px solid ;
+    border: 1px solid #333333;
     border-radius: 4px;
     margin-top: 1%;
     margin-right: 10%;
     background-color: #212121;
     position: sticky;
+    color: white;
 }
 input:hover{
     background-color: #333333;

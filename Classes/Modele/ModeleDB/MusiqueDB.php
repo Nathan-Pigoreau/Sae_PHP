@@ -19,7 +19,23 @@ final class MusiqueDB
     {
         $this->db = DataBase::getInstance();
     }
-
+    public function getMusiques(){
+        $query = "SELECT * FROM MUSIQUE";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $musiquesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $musiques = [];
+        foreach ($musiquesData as $musiqueData)
+        {
+            $musique = new Musique($musiqueData['idMusique'], $musiqueData['idArtiste'], $musiqueData['nomMusique'], $musiqueData['releaseYear'],$musiqueData['imageMusique'], $musiqueData['nbVues']);
+            if($musiqueData['idAlbum'])
+            {
+                $musique->setIdAlbum($musiqueData['idAlbum']);
+            }
+            array_push($musiques, $musique);
+        }
+        return $musiques;
+    }
     public function getMusique(int $idMusique)
     {
         $genres = $this->getGenresMusique($idMusique);
