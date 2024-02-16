@@ -144,8 +144,6 @@ final class Album
         $html .= '<div class="album-infos">';
         $html .= '<h2><a href="/album-details?id=' . $this->idAlbum . '">'. $this->nomAlbum . '</a></h2>';
         $html .= '</div>';
-        $html .= '<div class="album-musiques">';
-        $html .= '</div>';
         $html .= '</div>';
         return $html;
     }
@@ -189,5 +187,16 @@ final class Album
         $html .= $this->getGenresRender();
         $html .= '</div>';
         return $html;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            "idAlbum" => $this->idAlbum,
+            "idArtiste" => $this->idArtiste,
+            "nomAlbum" => $this->nomAlbum,
+            "releaseYear" => $this->releaseYear,
+            "image" => $this->image,
+        ];
     }
 }

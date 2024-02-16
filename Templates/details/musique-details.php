@@ -48,9 +48,13 @@ if (isset($_GET['id'])) {
         .then(data => {
             if (data === 'like') {
                 this.innerHTML = '<img class="like" src="/Static/images/Logo_like.png" alt="bouton_like">';
-            } else {
+            } else if (data === 'dislike'){
                 this.innerHTML = '<img class="like" src="/Static/images/Logo_like_2.png" alt="bouton_dislike">';
             }
+            else {
+                alert('Vous devez être connecté pour aimer une musique');
+            }
+
         })
         .catch((error) => {
             alert('Vous devez être connecté pour aimer une musique.');

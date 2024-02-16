@@ -23,7 +23,6 @@ if ($id_utilisateur_connecte && isset($_POST['idMusique'])) {
         echo "dislike";
     }
 } else {
-    http_response_code(400);
-    echo "Error: Invalid request.";
+    echo "Error";
 }
 ?>

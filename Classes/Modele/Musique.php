@@ -138,7 +138,7 @@ final class Musique
     {
         $modelDB = new MusiqueDB();
 
-        if($_SESSION['user'] && $modelDB->isFavoris($_SESSION['user']->getIdUser(), $this->idMusique)){
+        if(isset($_SESSION['user']) && $modelDB->isFavoris($_SESSION['user']->getIdUser(), $this->idMusique)){
             $like = "Logo_like.png";
         }
         else{
