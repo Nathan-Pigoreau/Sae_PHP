@@ -120,19 +120,37 @@ final class MusiqueDB
         return $artisteData['nomA'];
     }
 
+    public function isFavoris(int $idUser, int $idMusique): bool
+    {
+        $query = "SELECT * FROM APPRECIER WHERE idUser = :idUser AND idMusique = :idMusique";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $stmt->bindParam(":idMusique", $idMusique, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        if($stmt->fetch(PDO::FETCH_ASSOC))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public function getMusiqueAlbum($idAlbum)
     {
         $__ALBUM__ = new AlbumDB();
         return $__ALBUM__->getAlbum($idAlbum);
     }
 
-    public function addMusique($idArtiste, $nomMusique, $realeaseYear, $imageMusique, $idAlbum)
+    public function addMusique($idArtiste, $nomMusique, $releaseYear, $imageMusique, $idAlbum)
     {
-        $query = "INSERT INTO MUSIQUE (idArtiste, nomMusique, realeaseYear, imageMusique, idAlbum) VALUES (:idArtiste, :nomMusique, :realeaseYear, :imageMusique, :idAlbum)";
+        $query = "INSERT INTO MUSIQUE (idArtiste, nomMusique, releaseYear, imageMusique, idAlbum) VALUES (:idArtiste, :nomMusique, :releaseYear, :imageMusique, :idAlbum)";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':idArtiste', $idArtiste);
         $stmt->bindParam(':nomMusique', $nomMusique);
-        $stmt->bindParam(':realeaseYear', $realeaseYear);
+        $stmt->bindParam(':releaseYear', $releaseYear);
         $stmt->bindParam(':imageMusique', $imageMusique);
         $stmt->bindParam(':idAlbum', $idAlbum);
         $stmt->execute();
@@ -140,16 +158,73 @@ final class MusiqueDB
 
     public function updateMusique(Musique $musique)
     {
-        $query = "UPDATE MUSIQUE SET idAlbum = :idAlbum, idArtiste = :idArtiste, nomMusique = :nomMusique, realeaseYear = :realeaseYear, imageMusique = :imageMusique, nbVues = :nbVues WHERE idMusique = :idMusique";
+        $query = "UPDATE MUSIQUE SET idAlbum = :idAlbum, idArtiste = :idArtiste, nomMusique = :nomMusique, releaseYear = :releaseYear, imageMusique = :imageMusique, nbVues = :nbVues WHERE idMusique = :idMusique";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':idAlbum', $musique->getIdAlbum());
         $stmt->bindParam(':idArtiste', $musique->getIdArtiste());
         $stmt->bindParam(':nomMusique', $musique->getNomMusique());
-        $stmt->bindParam(':realeaseYear', $musique->getRealeaseYear());
+        $stmt->bindParam(':releaseYear', $musique->getReleaseYear());
         $stmt->bindParam(':imageMusique', $musique->getImage());
         $stmt->bindParam(':nbVues', $musique->getNbVues());
         $stmt->bindParam(':idMusique', $musique->getIdMusique());
         $stmt->execute();
     }
+
+    public function filtreMusiqueYear(int $releaseYear){
+        $query = "SELECT * FROM MUSIQUE WHERE releaseYear = :releaseYear";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':releaseYear', $releaseYear);
+        $stmt->execute();
+        $musiquesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $musiques = [];
+
+        foreach ($musiquesData as $musiqueData)
+        {
+            $musique = $this->getMusique($musiqueData['idMusique']);
+            array_push($musiques, $musique);
+        }
+        return $musiques;
+    }
+
+    public function filtreMusiqueGenre(int $idGenre){
+        $query = "SELECT idMusique FROM CLASSER WHERE idGenre = :idGenre";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idGenre', $idGenre);
+        $stmt->execute();
+        $musiquesId = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $musiques = [];
+
+        foreach ($musiquesId as $id)
+        {
+            $musique = $this->getMusique($id);
+            array_push($musiques, $musique);
+        }
+        return $musiques;
+    }
+
+    public function filtreMusique(int $idGenre, int $releaseYear){
+        $query = "SELECT idMusique FROM MUSIQUE WHERE idMusique IN (SELECT idMusique FROM CLASSER WHERE idGenre = :idGenre) AND releaseYear = :releaseYear";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idGenre', $idGenre);
+        $stmt->bindParam(':releaseYear', $releaseYear);
+        $stmt->execute();
+        $musiquesId = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        $musiques = [];
+
+        foreach ($musiquesId as $id)
+        {
+            $musique = $this->getMusique($id);
+            if($musique->getReleaseYear() == $releaseYear)
+            {
+                array_push($musiques, $musique);
+            }
+        }
+        return $musiques;
+    }
+
+
 
 }

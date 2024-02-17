@@ -46,7 +46,7 @@ final class AlbumDB
         $stmt->bindParam(':idArtiste', $album->getIdArtiste());
         $stmt->bindParam(':nomAlbum', $album->getNomAlbum());
         $stmt->bindParam(':idAlbum', $album->getIdAlbum());
-        $stmt->bindParam(':releaseYear', $album->getRealeaseYear());
+        $stmt->bindParam(':releaseYear', $album->getReleaseYear());
         $stmt->execute();
 
     }
@@ -207,10 +207,42 @@ final class AlbumDB
         $stmt->execute();
     }
 
-    public function filtreGenre(String $genre){
-        $query = "SELECT * FROM ALBUM WHERE idAlbum IN (SELECT idAlbum FROM APARTENIR WHERE idGenre = (SELECT idGenre FROM GENRE WHERE nomGenre = :genre))";
+    public function filtreAlbumGenre(int $idGenre){
+        $query = "SELECT * FROM ALBUM WHERE idAlbum IN (SELECT idAlbum FROM APPARTENIR WHERE idGenre = :idGenre)";
         $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':genre', $genre);
+        $stmt->bindParam(':idGenre', $idGenre);
+        $stmt->execute();
+        $albumsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $albums = [];
+        foreach ($albumsData as $albumData)
+        {
+            $album = $this->getAlbum($albumData['idAlbum']);
+            array_push($albums, $album);
+        }
+        return $albums;
+    }
+
+    public function filtreAlbumYear(int $year){
+        $query = "SELECT * FROM ALBUM WHERE releaseYear = :year";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':year', $year);
+        $stmt->execute();
+        $albumsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $albums = [];
+        foreach ($albumsData as $albumData)
+        {
+            $album = $this->getAlbum($albumData['idAlbum']);
+            array_push($albums, $album);
+        }
+        return $albums;
+    }
+
+    public function filtreAlbum(int $idGenre, int $year){
+        $query = "SELECT * FROM ALBUM WHERE idAlbum IN (SELECT idAlbum FROM APPARTENIR WHERE idGenre = :idGenre) AND releaseYear = :year";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idGenre', $idGenre);
+        $stmt->bindParam(':year', $year);
         $stmt->execute();
         $albumsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $albums = [];

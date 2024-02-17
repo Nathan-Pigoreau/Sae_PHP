@@ -30,7 +30,6 @@ final class Utilisateur
     
     private String $pdp;
 
-
     // Constructeur
 
     public function __construct(int $idUser, String $pseudo, String $mdp, String $email, String $descriptionUser, String $roleU)
@@ -125,14 +124,14 @@ final class Utilisateur
         $this->pdp = $pdp;
     }
 
-    public function addFavori(Musique $musique): void
+    public function addFavoris(Musique $musique): void
     {
-        $this->favoris[] = $musique; // Ajoute la musique à la liste des favoris
+       $this->favoris[] = $musique; // Ajoute la musique à la liste des favoris
     }
 
-    public function removeFavori(Musique $musique): void
+    public function removeFavoris(int $idmusique): void
     {
-        $key = array_search($musique, $this->favoris, true); // Cherche la musique dans la liste des favoris
+        $key = array_search($idmusique, array_column($this->favoris, 'idMusique'));
         if ($key !== false) {
             unset($this->favoris[$key]); // Supprime la musique de la liste des favoris
         }
