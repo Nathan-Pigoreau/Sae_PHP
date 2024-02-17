@@ -46,7 +46,7 @@ final class AlbumDB
         $stmt->bindParam(':idArtiste', $album->getIdArtiste());
         $stmt->bindParam(':nomAlbum', $album->getNomAlbum());
         $stmt->bindParam(':idAlbum', $album->getIdAlbum());
-        $stmt->bindParam(':releaseYear', $album->getRealeaseYear());
+        $stmt->bindParam(':releaseYear', $album->getReleaseYear());
         $stmt->execute();
 
     }

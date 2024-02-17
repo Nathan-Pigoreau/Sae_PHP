@@ -57,7 +57,7 @@ final class Album
         return $this->nomAlbum;
     }
 
-    public function getRealeaseYear(): int
+    public function getReleaseYear(): int
     {
         return $this->releaseYear;
     }
@@ -89,7 +89,7 @@ final class Album
         $this->updateAlbum();
     }
 
-    public function setRealeaseYear(int $realeaseYear): void
+    public function setreleaseYear(int $releaseYear): void
     {
         $this->releaseYear = $releaseYear;
         $this->updateAlbum();

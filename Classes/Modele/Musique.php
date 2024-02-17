@@ -16,7 +16,7 @@ final class Musique
 
     private String $nomMusique;
 
-    private int $realeaseYear;
+    private int $releaseYear;
 
     
     private String $image;
@@ -31,13 +31,13 @@ final class Musique
     
     // Constructeur
 
-    public function __construct(int $idMusique, int $idArtiste, String $nomMusique, int $realeaseYear, String $image, int $nbVues)
+    public function __construct(int $idMusique, int $idArtiste, String $nomMusique, int $releaseYear, String $image, int $nbVues)
     {
         $this->idMusique = $idMusique;
         $this->idAlbum = null;
         $this->idArtiste = $idArtiste;
         $this->nomMusique = $nomMusique;
-        $this->realeaseYear = $realeaseYear;
+        $this->releaseYear = $releaseYear;
         $this->image = $image;
         $this->genres = [];
         $this->nbVues = $nbVues;
@@ -61,9 +61,9 @@ final class Musique
         return $this->nomMusique;
     }
 
-    public function getRealeaseYear(): int
+    public function getReleaseYear(): int
     {
-        return $this->realeaseYear;
+        return $this->releaseYear;
     }
 
     public function getGenres(): array
@@ -111,12 +111,25 @@ final class Musique
         $modelDB->updateMusique($this);
     }
 
+    public function toArray(): array
+    {
+        return [
+            "idMusique" => $this->idMusique,
+            "idAlbum" => $this->idAlbum,
+            "idArtiste" => $this->idArtiste,
+            "nomMusique" => $this->nomMusique,
+            "releaseYear" => $this->releaseYear,
+            "image" => $this->image,
+            "nbVues" => $this->nbVues
+        ];
+    }
+
     public function render(): string
     {
         $html = "<div class='musique'>";
         $html .= '<img src="'. '/Static/images/'. $this->image . '" alt="' . $this->nomMusique . '">';
         $html .= "<h2><a href='musique-details?id=" . $this->idMusique . "'>". $this->nomMusique . "</a></h2>";
-        $html .= "<p>" . $this->realeaseYear . "</p>";
+        $html .= "<p>" . $this->releaseYear . "</p>";
         $html .= "<p>" . $this->nbVues . "</p>";
         $html .= "</div>";
 
@@ -127,7 +140,7 @@ final class Musique
         $html .= '<img class = "imgmusique" src="'. '/Static/images/'. $this->image . '" alt="' . $this->nomMusique . '">';
         $html .= "<div class='musique-details'>";
         $html .= "<h2><a href='musique-details?id=" . $this->idMusique . "'>". $this->nomMusique . "</a></h2>";
-        // $html .= "<p>" . $this->realeaseYear . "</p>";
+        // $html .= "<p>" . $this->releaseYear . "</p>";
         $html .= "</div>";
         $html .= "</div>";
         return $html;
