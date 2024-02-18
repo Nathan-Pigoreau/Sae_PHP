@@ -21,9 +21,9 @@ if($id_utilisateur_connecte){
         $idMusique = (int)$_POST["idMusique"];
         $playlist = $__PLAYLIST__->getPlaylist($idPlaylist);
         if($playlist->getIdUser() == $id_utilisateur_connecte){
-            $__PLAYLIST__->addPlaylistMusique($idPlaylist, $idMusique);
+            $__PLAYLIST__->removePlaylistMusique($idPlaylist, $idMusique);
             $musique = $__PLAYLIST__->getMusique($idMusique);
-            $playlist->addMusique($musique);
+            $playlist->removeMusique($musique);
             header("Location: /playlist-details?id=" . $idPlaylist);
             exit();
         }

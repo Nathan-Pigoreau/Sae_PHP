@@ -19,11 +19,13 @@ $routes = [
     '/register' => 'register.php',
     '/' => 'main.php',
     '/playlists' => 'playlists.php',
+    '/playlist-details' => 'details/playlist-details.php',
     '/album-details' => 'details/album-details.php',
     '/artiste-details' => 'details/artiste-details.php',
     '/musique-details' => 'details/musique-details.php',
     '/musiques' => 'musiques.php',
-    '/albums' => 'albums.php'
+    '/albums' => 'albums.php',
+    '/favoris' => 'favoris.php'
 
 ];
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -61,6 +63,12 @@ switch(isset($routes[$uri]))
         $template->setContent('$routes[$uri]');
         echo $template->compile();
         break;
+    case '/playlist-details':
+        include __DIR__ . '/Templates/' . $routes[$uri];
+        $template->setLayout('base2');
+        $template->setContent('$routes[$uri]');
+        echo $template->compile();
+        break;
     case '/album-details':
         include __DIR__ . '/Templates/' . $routes[$uri];
         $template->setLayout('base2');
@@ -89,6 +97,12 @@ switch(isset($routes[$uri]))
         include __DIR__ . '/Templates/' . $routes[$uri];
         $template->setLayout('base2');
         $template->setContent('$routes[$uri]');
+        echo $template->compile();
+        break;
+    case '/favoris':
+        include __DIR__ . '/Templates/' . $routes[$uri];
+        $template->setLayout('base2');
+        $template->setContent('routes[$uri]');
         echo $template->compile();
         break;
     default:

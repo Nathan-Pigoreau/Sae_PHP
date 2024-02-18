@@ -11,14 +11,13 @@ $id_utilisateur_connecte = $user ? $user->getIdUser() : null;
 
 if ($id_utilisateur_connecte && isset($_POST['idMusique'])) {
     $__USER__ = new UtilisateurDB();
-    if($__USER__->isFavoris($id_utilisateur_connecte, intval($_POST['idMusique'])) === false){
-        $idMusique = intval($_POST['idMusique']);
+    $idMusique = intval($_POST['idMusique']);
+    if($__USER__->isFavoris($id_utilisateur_connecte, $idMusique) === false){
         $user->addFavoris($__USER__->getMusique($idMusique));
         $__USER__->addFavoris($id_utilisateur_connecte, $idMusique);
         echo "like";
     }else{
-        $idMusique = intval($_POST['idMusique']);
-        $user->removeFavoris($id_utilisateur_connecte, $idMusique);
+        $user->removeFavoris($idMusique);
         $__USER__->removeFavoris($id_utilisateur_connecte, $idMusique);
         echo "dislike";
     }

@@ -85,15 +85,6 @@ final class PlaylistDB
         $stmt->execute();
     }
 
-    public function addMusiquePlaylist(int $idPlaylist, int $idMusique)
-    {
-        $query = "INSERT INTO CONTENIR (idPlaylist, idMusique) VALUES (:idPlaylist, :idMusique)";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':idPlaylist', $idPlaylist);
-        $stmt->bindParam(':idMusique', $idMusique);
-        $stmt->execute();
-    }
-
     public function removeMusiquePlaylist(int $idPlaylist, int $idMusique)
     {
         $query = "DELETE FROM CONTENIR WHERE idPlaylist = :idPlaylist AND idMusique = :idMusique";
@@ -114,25 +105,70 @@ final class PlaylistDB
     }
 
     public function getPlaylistId(string $nomPlaylist)
-{
-    $query = "SELECT idPlaylist FROM PLAYLIST WHERE nomPlaylist = :nomPlaylist";
-    $stmt = $this->db->prepare($query);
-    $stmt->bindParam(':nomPlaylist', $nomPlaylist);
-    $stmt->execute();
-    $playlistData = $stmt->fetch(PDO::FETCH_ASSOC);
+    {
+        $query = "SELECT idPlaylist FROM PLAYLIST WHERE nomPlaylist = :nomPlaylist";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':nomPlaylist', $nomPlaylist);
+        $stmt->execute();
+        $playlistData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($playlistData !== false && isset($playlistData['idPlaylist'])) {
-        return $playlistData['idPlaylist'];
-    } else {
-        throw new \Exception("Playlist not found with name: ". $nomPlaylist);
-        return null;
+        if ($playlistData !== false && isset($playlistData['idPlaylist'])) {
+            return $playlistData['idPlaylist'];
+        } else {
+            throw new \Exception("Playlist not found with name: ". $nomPlaylist);
+            return null;
+        }
     }
-}
 
 
     public function initPlaylist(int $idPlaylist){
         $playlist = $this->getPlaylist($idPlaylist);
-        $_SESSION['playlist'] = $playlist;
+        $_SESSION['user']->addPlaylist($playlist);
+    }
+
+
+    public function addPlaylistMusique(int $idPlaylist, int $idMusique):void
+    {
+        if ($this->isPlaylistMusique($idPlaylist, $idMusique)) {
+            return;
+        }
+        $query = "INSERT INTO CONTENIR (idPlaylist, idMusique) VALUES (:idPlaylist, :idMusique)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idPlaylist', $idPlaylist);
+        $stmt->bindParam(':idMusique', $idMusique);
+        $stmt->execute();
+    }
+
+    public function removePlaylistMusique(int $idPlaylist, int $idMusique)
+    {
+        $query = "DELETE FROM CONTENIR WHERE idPlaylist = :idPlaylist AND idMusique = :idMusique";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idPlaylist', $idPlaylist);
+        $stmt->bindParam(':idMusique', $idMusique);
+        $stmt->execute();
+    }
+
+    public function getMusique(int $idMusique){
+        $__MUSIQUE__ = new MusiqueDB();
+        return $__MUSIQUE__->getMusique($idMusique);
+    }
+
+    public function isPlaylistMusique(int $idPlaylist, int $idMusique): bool
+    {
+        $query = "SELECT * FROM CONTENIR WHERE idPlaylist = :idPlaylist AND idMusique = :idMusique";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idPlaylist', $idPlaylist);
+        $stmt->bindParam(':idMusique', $idMusique);
+        $stmt->execute();
+
+        if($stmt->fetch(PDO::FETCH_ASSOC))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 }
