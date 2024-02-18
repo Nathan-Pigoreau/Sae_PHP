@@ -1,0 +1,15 @@
+h1 {
+    margin-left: 15em;
+}
+.drop-area {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+}
+.highlight {
+    border-color: #007BFF;
+}
+
+body {
+    margin-left: 15em;
+}

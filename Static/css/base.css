@@ -1,0 +1,81 @@
+li{
+    list-style: none;
+    margin: 0;
+    padding-bottom: 5%;
+}
+nav{
+    width: 15%;
+    min-height: 100%;
+    display: inline;
+    border-right: 2px solid #333333;
+    margin-right: 5%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #212121;
+}
+a{
+    text-decoration: none;
+    color: white;
+}
+.nav{
+    display: flex;
+    min-height: 100%;
+    flex-wrap: wrap;
+    }
+#id{
+    max-height: 5%;
+}
+input{
+    padding: 1%;
+    height: 10%;
+    width: 30%;
+    flex-grow: 0;
+    border: 1px solid #333333;
+    border-radius: 4px;
+    margin-top: 1%;
+    margin-right: 10%;
+    background-color: #212121;
+    position: sticky;
+    color: white;
+}
+input:hover{
+    background-color: #333333;
+}
+/* à remplir avec la bonne police  */
+body{
+    font-family: 'Georgia', serif;
+    background-color: #212121;
+}
+#logo{
+    /* position: fixed; */
+    /* transform: scale(0.3); */
+    max-width: 100px;
+    max-height: 100px;
+    /* left: 80%; */
+}
+.search p{
+    display: inline;
+    margin-right: 10%;
+    
+}
+
+.search{
+    padding-left: 18%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+    padding-top: 1%;
+}
+.search a{
+    border:  2px solid #333333;
+    border-radius: 4px;
+    padding: 5px;   
+}
+.search a:hover{
+    background-color: #333333;
+}
+main,p{
+    padding-left: 15% ;
+}
