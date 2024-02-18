@@ -174,4 +174,17 @@ final class Musique
 
         return $html;
     }
+
+    public function renderPlaylist(int $idPlaylist): string
+    {
+        $html = "<div class='musique'>";
+        $html .= "<h2>" . $this->nomMusique . "</h2>";
+        $html .= "<form action='/Classes/Controller/controllerRemoveMusiquePlaylist.php' method='post'>";
+        $html .= "<input type='hidden' name='idMusique' value='" . $this->idMusique . "'>";
+        $html .= "<input type='hidden' name='idPlaylist' value='" . $idPlaylist . "'>";
+        $html .= "<button type='submit'>Supprimer</button>";
+        $html .= "</div>";
+
+        return $html;
+    }
 }

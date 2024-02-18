@@ -131,9 +131,13 @@ final class Utilisateur
 
     public function removeFavoris(int $idmusique): void
     {
-        $key = array_search($idmusique, array_column($this->favoris, 'idMusique'));
-        if ($key !== false) {
-            unset($this->favoris[$key]); // Supprime la musique de la liste des favoris
+        foreach ($this->favoris as $musique) {
+            if ($musique->getIdMusique() == $idmusique) {
+                $key = array_search($musique, $this->favoris, true); // Cherche la musique dans la liste des favoris
+                if ($key !== false) {
+                    unset($this->favoris[$key]); // Supprime la musique de la liste des favoris
+                }
+            }
         }
     }
 
@@ -173,14 +177,10 @@ final class Utilisateur
         $html = "<div class='playlists'>";
         foreach ($this->playlists as $playlist)
         {
-            $html .= $playlist->render();
+            $html .= "<a href='/playlist-details?id=". $playlist->getIdPlaylist(). "'><p>". $playlist->getNomPlaylist() . "</p></a><br>";
         }
         $html .= "</div>";
 
         return $html;
     }
-
-
-
-
 }

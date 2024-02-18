@@ -18,8 +18,6 @@ final class Playlist
      */
     private array $musiques = [];
 
-    private PlaylistDB $modelBD;
-
 
     // Constructeur
 
@@ -30,7 +28,6 @@ final class Playlist
         $this->idUser = $idUser;
         $this->musiques = [];
 
-        $this->modelBD = new PlaylistDB();
     }
 
     // Getters
@@ -66,22 +63,25 @@ final class Playlist
 
     public function addMusique(Musique $musique): void
     {
+        $modelBD = new PlaylistDB();
+
         $this->musiques[] = $musique;
-        $this->modelBD->addMusique($this->idPlaylist, $musique->getIdMusique());
     }
 
     public function removeMusique(Musique $musique): void
     {
+        $modelBD = new PlaylistDB();
+
         $key = array_search($musique, $this->musiques);
         if ($key !== false) {
             unset($this->musiques[$key]);
-            $this->modelBD->removeMusique($this->idPlaylist, $musique->getIdMusique());
         }
     }
 
     public function updatePlaylist(): void
     {
-        $this->modelBD->updatePlaylist($this);
+        $modelBD = new PlaylistDB();
+        $modelBD->updatePlaylist($this);
     }
 
 
@@ -92,7 +92,7 @@ final class Playlist
         $html .= "<div class='musiques'>";
         foreach ($this->musiques as $musique)
         {
-            $html .= $musique->render();
+            $html .= $musique->renderPlaylist($this->idPlaylist);
         }
         $html .= "</div>";
         $html .= "</div>";

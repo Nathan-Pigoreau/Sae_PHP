@@ -69,11 +69,11 @@ final class UtilisateurDB
         $user = new Utilisateur($userData['idUser'], $userData['pseudo'], $userData['mdp'], $userData['email'], $userData['descriptionU'], $userData['roleU']);
         if ($userData['imageUser'] != null)
             $user->setPdp($userData['imageUser']);
+    
+        $this->initUserPlaylist($user);
+        $this->initUserFavoris($user);
 
         $_SESSION['user'] = $user;
-    
-        $this->initUserPlaylist($userData['idUser']);
-        $this->initUserFavoris($userData['idUser']);
     }
 
     public function getUserByEmail(String $email)
@@ -85,39 +85,37 @@ final class UtilisateurDB
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function initUserPlaylist(int $idUser)
+    public function initUserPlaylist(Utilisateur $user)
     {   
-        session_start();
         $__PLAYLIST__ = new PlaylistDB();
-        $user = $_SESSION['user'];
+        $idUser = $user->getIdUser();
 
         $query = "SELECT * FROM PLAYLIST WHERE idUser = :idUser";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(":idUser", $idUser, PDO::PARAM_INT);
         $stmt->execute();
-        $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $playlists = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        foreach ($stmt as $playlistData) {
+        foreach ($playlists as $playlistData) {
             $playlist = $__PLAYLIST__->getPlaylist($playlistData['idPlaylist']);
             $user->addPlaylist($playlist);
         }
     }
 
-    public function initUserFavoris(int $idUser):void
-    {   
-        session_start();
+    public function initUserFavoris(Utilisateur $user):void
+    {
         $__MUSIQUE__ = new MusiqueDB();
-        $user = $_SESSION['user'];
-
+        $idUser = $user->getIdUser();
+    
         $query = "SELECT * FROM APPRECIER WHERE idUser = :idUser";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(":idUser", $idUser, PDO::PARAM_INT);
         $stmt->execute();
-        $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach ($stmt as $favoriData) {
-            $favori = getMusique($favoriData['idMusique']);
-            $user->addFavori($favori);
+        $favorisData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+        foreach ($favorisData as $favoriData) {
+            $favori = $__MUSIQUE__->getMusique($favoriData['idMusique']);
+            $user->addFavoris($favori);
         }
     }
 
