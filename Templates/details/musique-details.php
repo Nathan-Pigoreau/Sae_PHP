@@ -33,6 +33,20 @@ if (isset($_GET['id'])) {
         <section>
             <?php echo $musique->renderDetails(); ?>
         </section>
+        <h2>Ajouter la musique dans une playlist</h2>
+        <div class="ajoutMusiquePlaylist">
+            <form action="/Classes/Controller/controllerAjoutMusiquePlaylist.php" method="post">
+                <input type="hidden" name="idMusique" value="<?php echo $musique->getIdMusique(); ?>">
+                <select name="idPlaylist">
+                    <?php
+                    $playlists = $_SESSION['user']->getPlaylists();
+                    foreach ($playlists as $playlist) {
+                        echo '<option value="' . $playlist->getIdPlaylist() . '">' . $playlist->getNomPlaylist() . '</option>';
+                    }
+                    ?>
+                </select>
+                <input type="submit" value="Ajouter">
+            </form>
 </body>
 <script>
     document.getElementsByClassName('like-button')[0].addEventListener('click', function() {

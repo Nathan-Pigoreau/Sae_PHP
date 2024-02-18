@@ -69,18 +69,11 @@ final class UtilisateurDB
         $user = new Utilisateur($userData['idUser'], $userData['pseudo'], $userData['mdp'], $userData['email'], $userData['descriptionU'], $userData['roleU']);
         if ($userData['imageUser'] != null)
             $user->setPdp($userData['imageUser']);
-    
-        $playlist = $this->getUserPlaylist($userData['idUser']);
-        foreach($playlist as $playlist)
-        {
-            $user->addPlaylist($playlist);
-        }
-        $favoris = $this->getUserFavoris($userData['idUser']);
-        foreach($favoris as $favoris)
-        {
-            $user->addFavoris($favoris);
-        }
+
         $_SESSION['user'] = $user;
+    
+        $this->initUserPlaylist($userData['idUser']);
+        $this->initUserFavoris($userData['idUser']);
     }
 
     public function getUserByEmail(String $email)
@@ -92,9 +85,11 @@ final class UtilisateurDB
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function getUserPlaylist(int $idUser)
+    public function initUserPlaylist(int $idUser)
     {   
+        session_start();
         $__PLAYLIST__ = new PlaylistDB();
+        $user = $_SESSION['user'];
 
         $query = "SELECT * FROM PLAYLIST WHERE idUser = :idUser";
         $stmt = $this->db->prepare($query);
@@ -108,9 +103,11 @@ final class UtilisateurDB
         }
     }
 
-    public function getUserFavoris(int $idUser):void
+    public function initUserFavoris(int $idUser):void
     {   
+        session_start();
         $__MUSIQUE__ = new MusiqueDB();
+        $user = $_SESSION['user'];
 
         $query = "SELECT * FROM APPRECIER WHERE idUser = :idUser";
         $stmt = $this->db->prepare($query);

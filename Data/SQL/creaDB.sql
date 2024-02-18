@@ -63,7 +63,7 @@ CREATE TABLE UTILISATEUR(
     idUser INTEGER PRIMARY KEY AUTOINCREMENT,
     pseudo TEXT NOT NULL,
     mdp TEXT NOT NULL,
-    email TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
     descriptionU TEXT NOT NULL,
     roleU TEXT NOT NULL DEFAULT 'USER',
     imageUser TEXT DEFAULT "defaultPDP.png"

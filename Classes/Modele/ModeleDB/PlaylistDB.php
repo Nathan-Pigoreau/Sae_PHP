@@ -132,7 +132,7 @@ final class PlaylistDB
 
     public function initPlaylist(int $idPlaylist){
         $playlist = $this->getPlaylist($idPlaylist);
-        $_SESSION['playlist'] = $playlist;
+        $_SESSION['user']->addPlaylist($playlist);
     }
 
 }

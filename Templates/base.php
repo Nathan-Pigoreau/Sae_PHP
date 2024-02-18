@@ -19,7 +19,7 @@
                     <ul>
                         <li>
                                 <!-- <img src="Static/images/home.png" alt="écran d'accueil"/> -->
-                            </a>
+                            <a href="/">Accueil</a>
                         </li>
                         <li>
                             <a href="/playlists">Playlist</a>
@@ -28,6 +28,7 @@
                             <a href="/profil">Profil</a>
                         </li>
                         <li>
+                            <a href="/favoris">Favoris</a>
                         </li>    
                     </ul>
                 </nav>

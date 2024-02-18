@@ -175,6 +175,9 @@ final class Utilisateur
         {
             $html .= $playlist->render();
         }
+        $html .= "</div>";
+
+        return $html;
     }
 
 
