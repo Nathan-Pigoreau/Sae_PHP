@@ -76,3 +76,9 @@
 
 6.5 **Requirements**
     - Requirement : Php et PDO version 8.3.0
+
+### Consigne pour lancer l'application
+- Cloner le dépôt GitHub [Sae_PHP](https://github.com/Nathan-Pigoreau/Sae_PHP.git)
+- Initialiser la base de donnée avec la commande `php ./Data/creaDB.php`
+- Charger les données de base avec la commande `php ./Data/insertDB.php`
+- Lancer le serveur avec la commande `php -S localhost:8000`
