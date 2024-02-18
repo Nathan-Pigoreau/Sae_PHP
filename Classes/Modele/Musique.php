@@ -184,6 +184,40 @@ final class Musique
         $html .= "<input type='hidden' name='idPlaylist' value='" . $idPlaylist . "'>";
         $html .= "<button type='submit'>Supprimer</button>";
         $html .= "</div>";
+        
+        return $html;
+    }
+
+   
+    public function renderAdmin(): string
+    {
+        $html = "<div class='musique'>";
+        $html .= "<img src='path/to/musique/images/{$this->image}' alt='{$this->nomMusique}'>";
+        $html .= "<h2>{$this->nomMusique}</h2>";
+        $html .= "<p>Date de sortie: {$this->releaseYear}</p>";
+        $html .= "<p>Nombre de vues: {$this->nbVues}</p>";
+        $html .= "<button onclick='confirmDelete({$this->idMusique})'>Supprimer</button>";
+        $html .= '<script>
+            function confirmDelete(artisteId) {
+                var confirmDelete = confirm("Voulez-vous vraiment supprimer cet artiste?");
+                if (confirmDelete) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/Classes/Controller/controllerDeleteArtiste.php");
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.onload = function() {
+                        if (xhr.status === 200) {
+                            console.log("Artiste supprimé avec succès.");
+                            window.location.reload();
+                            alert("Artiste supprimé avec succès.");
+                        } else {
+                            console.error("Erreur lors de la suppression de l\'artiste.");
+                        }
+                    };
+                    xhr.send("id=" + artisteId);
+                }
+            }
+        </script>';
+        $html .= "</div>";
 
         return $html;
     }

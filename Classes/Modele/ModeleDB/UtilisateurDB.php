@@ -250,6 +250,23 @@ final class UtilisateurDB
         }
     }
 
+    public function addAdmin(){
+        $hashedPassword = password_hash("admin", PASSWORD_DEFAULT);
+        $role = "Admin";
+        $description = "Administrateur";
+        $pseudo = "admin";
+        $email = "admin@admin";
+
+        $query = "INSERT INTO utilisateur (pseudo, email, mdp, roleU, descriptionU) VALUES (:pseudo, :email, :mdp, :roleU, :descriptionU)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":pseudo", $pseudo, PDO::PARAM_STR);
+        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+        $stmt->bindParam(":mdp", $hashedPassword, PDO::PARAM_STR);
+        $stmt->bindParam(":roleU", $role, PDO::PARAM_STR);
+        $stmt->bindParam(":descriptionU", $description, PDO::PARAM_STR);
+        $stmt->execute();
+
+    }
 }
 
 

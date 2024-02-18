@@ -32,12 +32,19 @@ final class Artiste
 
     private ArtisteDB $modelDB;
 
-     public function __construct(int $idArtiste, String $nomA, String $prenomA, String $imageArtiste, String $descriptionA, int $nbAuditeurs)
+     public function __construct(int $idArtiste, String $nomA, String $prenomA, $imageArtiste, String $descriptionA, int $nbAuditeurs)
      {
         $this->idArtiste = $idArtiste;
         $this->nomA = $nomA;
         $this->prenomA = $prenomA;
-        $this->imageArtiste = $imageArtiste;
+        if ($imageArtiste == null)
+        {
+            $this->imageArtiste = "https://www.w3schools.com/w3images/avatar2.png";
+        }
+        else
+        {
+            $this->imageArtiste = $imageArtiste;
+        }
         $this->descriptionA = $descriptionA;
         $this->nbAuditeurs = $nbAuditeurs;
         $this->albums = [];
@@ -188,4 +195,43 @@ final class Artiste
    
          return $html;
      }
+   public function renderAdmin(): String
+   {
+       $html = '<div class="artiste">';
+       $html .= '<h2>' . $this->nomA . ' ' . $this->prenomA . '</h2>';
+       $html .= '<p>' . $this->descriptionA . '</p>';
+       $html .= '<p>' . $this->nbAuditeurs . ' auditeurs</p>';
+
+       // Ajouter des liens ou boutons pour les actions administratives
+       $html .= '<a href="/admin/artistes/modifier?id=' . $this->idArtiste . '"><button>Modifier</button></a>';
+       $html .= '<button onclick="confirmDelete(' . $this->idArtiste . ')">Supprimer</button>';
+
+       $html .= '</div>';
+
+       // Ajouter le script JavaScript à la fin du rendu
+       $html .= '<script>
+                   function confirmDelete(artisteId) {
+                       var confirmDelete = confirm("Voulez-vous vraiment supprimer cet artiste?");
+                       if (confirmDelete) {
+
+                           var xhr = new XMLHttpRequest();
+                           xhr.open("POST", "/Classes/Controller/controllerDeleteArtiste.php");
+                           xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                           xhr.onload = function() {
+                               if (xhr.status === 200) {
+                                   console.log("Artiste supprimé avec succès.");
+                                   window.location.reload();
+                                   alert("Artiste supprimé avec succès.");
+                               } else {
+                                   console.error("Erreur lors de la suppression de l\'artiste.");
+                               }
+                           };
+                           xhr.send("id=" + artisteId);
+                       }
+                   }
+                 </script>';
+
+       return $html;
+   }
+     
 }

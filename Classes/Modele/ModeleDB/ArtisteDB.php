@@ -21,26 +21,28 @@ final class ArtisteDB
         $this->db = DataBase::getInstance();
     }
 
-    public function getArtiste($idArtiste)
+    public function getArtiste(int $idArtiste)
     {
-        /**@var Albums */
         $albums = $this->getAlbumsArtiste($idArtiste);
-        /**@var Musiques */
         $musiques = $this->getMusiquesArtiste($idArtiste);
 
         $query = "SELECT * FROM ARTISTE WHERE idArtiste = :idArtiste";
-        $stmt = $this->db->query($query);
+        $stmt = $this->db->prepare($query);
         $stmt->bindParam(':idArtiste', $idArtiste);
         $stmt->execute();
         $artisteData = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $artiste = new Artiste($artisteData['idArtiste'], $artisteData['nomA'], $artisteData['prenomA'], $artisteData['imageArtiste'], $artisteData['descriptionA'], $artisteData['nbAuditeurs']);
-
+        $artiste = new Artiste(
+            $artisteData['idArtiste'],
+            $artisteData['nomA'],
+            $artisteData['prenomA'],
+            isset($artisteData['imageArtiste']) ? $artisteData['imageArtiste'] : '',
+            $artisteData['descriptionA'],
+            $artisteData['nbAuditeurs']
+        );
         foreach ($albums as $album)
         {
             $artiste->addAlbum($album);
         }
-
         foreach ($musiques as $musique)
         {
             $artiste->addMusique($musique);
@@ -48,8 +50,6 @@ final class ArtisteDB
 
         return $artiste;
     }
-        
-
 
     public function getAlbumsArtiste(int $idArtiste)
     {
@@ -101,11 +101,10 @@ final class ArtisteDB
 
     public function updateArtiste(Artiste $artiste)
     {
-        $query = "UPDATE ARTISTE SET nomA = :nomA, prenomA = :prenomA, imageArtiste = :imageArtiste, descriptionA = :descriptionA, nbAuditeurs = :nbAuditeurs WHERE idArtiste = :idArtiste";
+        $query = "UPDATE ARTISTE SET nomA = :nomA, prenomA = :prenomA, descriptionA = :descriptionA, nbAuditeurs = :nbAuditeurs WHERE idArtiste = :idArtiste";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':nomA', $artiste->getNomA());
         $stmt->bindParam(':prenomA', $artiste->getPrenomA());
-        $stmt->bindParam(':imageArtiste', $artiste->getImageArtiste());
         $stmt->bindParam(':descriptionA', $artiste->getDescriptionA());
         $stmt->bindParam(':nbAuditeurs', $artiste->getNbAuditeurs());
         $stmt->bindParam(':idArtiste', $artiste->getIdArtiste());
@@ -195,6 +194,78 @@ final class ArtisteDB
         {
             return false;
         }
+    }
+    public function ajouterArtiste(String $nomA, String $prenomA, String $descriptionA): void
+    {
+        $query = "INSERT INTO ARTISTE (nomA, prenomA, descriptionA) VALUES (:nomA, :prenomA, :descriptionA)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':nomA', $nomA);
+        $stmt->bindParam(':prenomA', $prenomA);
+        $stmt->bindParam(':descriptionA', $descriptionA);
+        $stmt->execute();
+    }
+
+    public function displayArtistesAdmin(): String
+    {
+        $artistes = $this->getArtistes();
+        $html = "<div class='artistes'>";
+        foreach ($artistes as $artiste)
+        {
+            $html .= $artiste->renderAdmin();
+        }
+        $html .= "</div>";
+
+        $html .= '<button onclick="showAddArtisteForm()">Ajouter un nouvel artiste</button>';
+
+        $html .= '<div id="addArtisteFormContainer" style="display:none;">';
+        $html .= '<h2>Ajouter un nouvel artiste</h2>';
+        $html .= '<form id="addArtisteForm" action="/Classes/Controller/controllerAddArtiste.php" method="post">';
+        $html .= '<label for="newArtisteName">Nom de l\'artiste:</label>';
+        $html .= '<input type="text" id="newArtisteName" name="newArtisteName" required>';
+        $html .= '<label for="newArtisteFirstName">Prénom de l\'artiste:</label>';
+        $html .= '<input type="text" id="newArtisteFirstName" name="newArtisteFirstName" required>';
+        $html .= '<label for="newArtisteDescription">Description de l\'artiste:</label>';
+        $html .= '<textarea id="newArtisteDescription" name="newArtisteDescription" required></textarea>';
+
+        $html .= '<input type="submit" value="Ajouter">';
+        $html .= '</form>';
+        $html .= '</div>';
+
+        $html .= '<script>
+                    function showAddArtisteForm() {
+                        var addArtisteFormContainer = document.getElementById("addArtisteFormContainer");
+                        addArtisteFormContainer.style.display = "block";
+                    }
+                  </script>';
+
+        return $html;
+    }
+
+    public function getArtistes(){
+        $query = "SELECT * FROM ARTISTE";
+        $stmt = $this->db->query($query);
+        $artistesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $artistes = [];
+        foreach ($artistesData as $artisteData)
+        {
+            $artistes[] = new Artiste(
+                $artisteData['idArtiste'],
+                $artisteData['nomA'],
+                $artisteData['prenomA'],
+                isset($artisteData['imageArtiste']) ? $artisteData['imageArtiste'] : '',
+                $artisteData['descriptionA'],
+                $artisteData['nbAuditeurs']
+            );
+        }
+        return $artistes;
+    }
+
+    public function deleteAllAlbums($idArtiste)
+    {
+        $query = "DELETE FROM ALBUM WHERE idArtiste = :idArtiste";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idArtiste', $idArtiste);
+        $stmt->execute();
     }
 
 }
