@@ -267,4 +267,14 @@ final class AlbumDB
             return false;
         }
     }
+
+    public function getMoyenneNote(int $idAlbum): float
+    {
+        $query = "SELECT AVG(note) as moyenne FROM NOTER WHERE idAlbum = :idAlbum";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":idAlbum", $idAlbum, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return floatval($result['moyenne']);
+    }
 }

@@ -198,6 +198,17 @@ final class UtilisateurDB
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function updateNoteAlbum(int $idUser, int $idAlbum, int $note)
+    {
+        $query = "UPDATE NOTER SET note = :note WHERE idUser = :idUser AND idAlbum = :idAlbum";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":note", $note, PDO::PARAM_INT);
+        $stmt->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $stmt->bindParam(":idAlbum", $idAlbum, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+
     public function getMusique(int $idMusique){
         $__MUSIQUE__ = new MusiqueDB();
         return $__MUSIQUE__->getMusique($idMusique);
@@ -209,6 +220,24 @@ final class UtilisateurDB
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(":idUser", $idUser, PDO::PARAM_INT);
         $stmt->bindParam(":idMusique", $idMusique, PDO::PARAM_INT);
+        $stmt->execute();
+
+        if($stmt->fetch(PDO::FETCH_ASSOC))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function isNoteExist(int $idUser, int $idAlbum): bool
+    {
+        $query = "SELECT * FROM NOTER WHERE idUser = :idUser AND idAlbum = :idAlbum";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $stmt->bindParam(":idAlbum", $idAlbum, PDO::PARAM_INT);
         $stmt->execute();
 
         if($stmt->fetch(PDO::FETCH_ASSOC))
