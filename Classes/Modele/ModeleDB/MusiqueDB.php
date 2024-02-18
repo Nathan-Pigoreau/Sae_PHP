@@ -102,4 +102,64 @@ final class MusiqueDB
         $stmt->execute();
     }
 
+    public function getMusiques(){
+        $query = "SELECT * FROM MUSIQUE";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $musiquesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $musiques = [];
+        foreach ($musiquesData as $musiqueData)
+        {
+            $musique = new Musique($musiqueData['idMusique'], $musiqueData['idArtiste'], $musiqueData['nomMusique'], $musiqueData['realeaseYear'], $musiqueData['imageMusique'], $musiqueData['nbVues']);
+            if($musiqueData['idAlbum'])
+            {
+                $musique->setIdAlbum($musiqueData['idAlbum']);
+            }
+            array_push($musiques, $musique);
+        }
+        return $musiques;
+    }
+
+    public function displayMusiquesAdmin(): string
+    {
+        $musiques = $this->getMusiques();
+        $html = "<div class='musiques'>";
+        foreach ($musiques as $musique) {
+            $html .= $musique->renderAdmin();
+        }
+        $html .= "</div>";
+    
+        $html .= '<button onclick="showAddMusiqueForm()">Ajouter une nouvelle musique</button>';
+    
+        $html .= '<div id="addMusiqueFormContainer" style="display:none;">';
+        $html .= '<h2>Ajouter une nouvelle musique</h2>';
+        $html .= '<form id="addMusiqueForm" action="/Classes/Controller/controllerAddMusique.php" method="post" enctype="multipart/form-data">';
+        $html .= '<label for="newMusiqueName">Nom de la musique:</label>';
+        $html .= '<input type="text" id="newMusiqueName" name="newMusiqueName" required>';
+        $html .= '<label for="newMusiqueReleaseYear">Date de sortie:</label>';
+        $html .= '<input type="text" id="newMusiqueReleaseYear" name="newMusiqueReleaseYear" required>';
+        $html .= '<label for="newMusiqueArtist">Artiste:</label>';
+        $html .= '<input type="text" id="newMusiqueArtist" name="newMusiqueArtist" required>';
+    
+        $html .= '<label for="newMusiqueImage">Image de la musique:</label>';
+        $html .= '<input type="file" id="newMusiqueImage" name="newMusiqueImage" accept="image/*" style="display: none;">';
+        $html .= '<button type="button" onclick="triggerFileInput()">Sélectionner une image</button>';
+    
+        $html .= '<input type="submit" value="Ajouter">';
+        $html .= '</form>';
+        $html .= '</div>';
+    
+        $html .= '<script>
+                    function showAddMusiqueForm() {
+                        var addMusiqueFormContainer = document.getElementById("addMusiqueFormContainer");
+                        addMusiqueFormContainer.style.display = "block";
+                    }
+                
+                    function triggerFileInput() {
+                        document.getElementById("newMusiqueImage").click();
+                    }
+                  </script>';
+                
+        return $html;
+    }
 }

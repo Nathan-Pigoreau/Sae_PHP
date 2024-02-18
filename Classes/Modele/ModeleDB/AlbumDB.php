@@ -19,6 +19,7 @@ final class AlbumDB
     public function __construct()
     {
         $this->db = DataBase::getInstance();
+        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     public function getAlbums()
@@ -41,15 +42,36 @@ final class AlbumDB
 
     public function updateAlbum(Album $album)
     {
-        $query = "UPDATE ALBUM SET idArtiste = :idArtiste, nomAlbum = :nomAlbum, idAlbum = :idAlbum, releaseYear :releaseYear WHERE idAlbum = :idAlbum";
+        $idAlbum = $album->getIdAlbum();
+        $this->deleteAppartenance((int)$idAlbum);
+        $query = "UPDATE ALBUM SET idArtiste = :idArtiste, nomAlbum = :nomAlbum, releaseYear = :releaseYear WHERE idAlbum = :idAlbum";
         $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':idArtiste', $album->getIdArtiste());
-        $stmt->bindParam(':nomAlbum', $album->getNomAlbum());
-        $stmt->bindParam(':idAlbum', $album->getIdAlbum());
-        $stmt->bindParam(':releaseYear', $album->getRealeaseYear());
+        $idArtiste = $album->getIdArtiste();
+        $nomAlbum = $album->getNomAlbum();
+        $releaseYear = $album->getReleaseYear();
+        $imageAlbum = $album->getImage();
+
+        $stmt->bindParam(':idArtiste', $idArtiste, PDO::PARAM_INT);
+        $stmt->bindParam(':nomAlbum', $nomAlbum, PDO::PARAM_STR);
+        $stmt->bindParam(':releaseYear', $releaseYear, PDO::PARAM_INT);
+        $stmt->bindParam(':idAlbum', $idAlbum, PDO::PARAM_INT);
         $stmt->execute();
 
+        $genres = $album->getGenres();
+        foreach ($genres as $genre)
+        {
+            $idGenre = $genre->getIdGenre();
+            $this->lierGenre($idAlbum, $idGenre);
+        }
     }
+
+    public function deleteAppartenance(int $idAlbum)
+{
+    $query = "DELETE FROM APPARTENIR WHERE idAlbum = :idAlbum";
+    $stmt = $this->db->prepare($query);
+    $stmt->bindParam(':idAlbum', $idAlbum, PDO::PARAM_INT);
+    $stmt->execute();
+}
 
     public function deleteAlbum(int $idAlbum)
     {
@@ -188,6 +210,19 @@ final class AlbumDB
         }
     }
 
+    public function addAlbumWithoutId(int $idArtiste, String $nomAlbum, int $releaseYear, String $imageAlbum)
+    {
+        if (!$this->albumExists($nomAlbum)) {
+            $query = "INSERT INTO ALBUM (idArtiste, nomAlbum, imageAlbum, releaseYear) VALUES (:idArtiste, :nomAlbum, :imageAlbum, :releaseYear)";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':idArtiste', $idArtiste);
+            $stmt->bindParam(':nomAlbum', $nomAlbum);
+            $stmt->bindParam(':imageAlbum', $imageAlbum);
+            $stmt->bindParam(':releaseYear', $releaseYear);
+            $stmt->execute();
+        }
+    }
+
     public function lierGenre(int $idAlbum, int $idGenre)
     {
         $query = "INSERT INTO APPARTENIR (idAlbum, idGenre) VALUES (:idAlbum, :idGenre)";
@@ -210,5 +245,77 @@ final class AlbumDB
             array_push($albums, $album);
         }
         return $albums;
+    }
+
+    public function displayAlbums(): String
+    {
+        $albums = $this->getAlbums();
+        $html = "<div class='albums'>";
+        foreach ($albums as $album)
+        {
+            $html .= $album->render();
+        }
+        $html .= "</div>";
+
+        return $html;
+    }
+
+    public function displayAlbumsAdmin(): String
+    {
+        $albums = $this->getAlbums();
+        $html = "<div class='albums'>";
+        foreach ($albums as $album)
+        {
+            $html .= $album->renderAdmin();
+        }
+        $html .= "</div>";
+
+        $html .= '<button onclick="showAddAlbumForm()">Ajouter un nouvel album</button>';
+
+        $html .= '<div id="addAlbumFormContainer" style="display:none;">';
+        $html .= '<h2>Ajouter un nouvel album</h2>';
+        $html .= '<form id="addAlbumForm" action="/Classes/Controller/controllerAddAlbum.php" method="post" enctype="multipart/form-data">';
+        $html .= '<label for="newAlbumName">Nom de l\'album:</label>';
+        $html .= '<input type="text" id="newAlbumName" name="newAlbumName" required>';
+        $html .= '<label for="newAlbumReleaseYear">Date de sortie:</label>';
+        $html .= '<input type="text" id="newAlbumReleaseYear" name="newAlbumReleaseYear" required>';
+        $html .= '<label for="newAlbumArtist">Artiste:</label>';
+        $html .= '<input type="text" id="newAlbumArtist" name="newAlbumArtist" required>';
+
+        $html .= '<label for="newAlbumImage">Image de l\'album:</label>';
+        $html .= '<input type="file" id="newAlbumImage" name="newAlbumImage" accept="image/*" style="display: none;">';
+        $html .= '<button type="button" onclick="triggerFileInput()">Sélectionner une image</button>';
+
+        $html .= '<input type="submit" value="Ajouter">';
+        $html .= '</form>';
+        $html .= '</div>';
+
+        $html .= '<script>
+                    function showAddAlbumForm() {
+                        var addAlbumFormContainer = document.getElementById("addAlbumFormContainer");
+                        addAlbumFormContainer.style.display = "block";
+                    }
+
+                    function triggerFileInput() {
+                        document.getElementById("newAlbumImage").click();
+                    }
+                  </script>';
+
+        return $html;
+    }
+
+    function getIdArtiste(String $nomArtiste)
+    {
+        $query = "SELECT idArtiste FROM ARTISTE WHERE nomA = :nomArtiste";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':nomArtiste', $nomArtiste);
+        $stmt->execute();
+        $idArtiste = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $idArtiste['idArtiste'];
+    }
+
+    function getGenres(){
+        $__GENRE__ = new GenreDB();
+        return $__GENRE__->getGenres();
     }
 }

@@ -56,7 +56,7 @@ final class Album
         return $this->nomAlbum;
     }
 
-    public function getRealeaseYear(): int
+    public function getReleaseYear(): int
     {
         return $this->releaseYear;
     }
@@ -64,6 +64,11 @@ final class Album
     public function getIdGenre(): int
     {
         return $this->idGenre;
+    }
+
+    public function getGenres(): Array
+    {
+        return $this->genres;
     }
 
     public function getImage(): String
@@ -88,10 +93,27 @@ final class Album
         $this->updateAlbum();
     }
 
-    public function setRealeaseYear(int $realeaseYear): void
+    public function setReleaseYear(int $releaseYear): void
     {
         $this->releaseYear = $releaseYear;
         $this->updateAlbum();
+    }
+
+    public function setIdArtiste(int $idArtiste): void
+    {
+        $this->idArtiste = $idArtiste;
+        $this->updateAlbum();
+    }
+
+    public function setImageAlbum(string $image): void
+    {
+        $this->image = $image;
+        $this->updateAlbum();
+    }
+
+    public function resetGenre(): void
+    {
+        $this->genres = [];
     }
 
     public function initGenre(Genre $genre): void
@@ -104,6 +126,10 @@ final class Album
         $this->musiques[] = $musique;
     }
 
+    public function addGenre(Genre $genre): void
+{
+    $this->genres[] = $genre;
+}
 
     public function addMusique(Musique $musique): void
     {
@@ -157,4 +183,44 @@ final class Album
         $html .= '</div>';
         return $html;
     }
+
+    public function renderAdmin(){
+        $html = '<div class="album">';
+        $html .= '<h2>' . $this->nomAlbum . '</h2>';
+        $html .= '<p>Date de sortie : ' . $this->releaseYear . '</p>';
+        $html .= '<p>Artiste : ' . $this->idArtiste . '</p>';
+        
+        $html .= '<a href="/admin/albums/modifier?id=' . $this->idAlbum . '"><button>Modifier</button></a>';
+        
+        // Utilisez une fonction JavaScript pour confirmer la suppression avec une requête AJAX
+        $html .= '<button onclick="confirmDelete(' . $this->idAlbum . ')">Supprimer</button>';
+        
+        $html .= '</div>';
+    
+        // Ajoutez le script JavaScript une seule fois à la fin de votre document
+        $html .= '<script>
+                    function confirmDelete(albumId) {
+                        var confirmDelete = confirm("Voulez-vous vraiment supprimer cet album?");
+                        if (confirmDelete) {
+                            
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("POST", "/Classes/Controller/controllerDeleteAlbum.php");
+                            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                            xhr.onload = function() {
+                                if (xhr.status === 200) {
+                                    console.log("Album supprimé avec succès.");
+                                    window.location.reload();
+                                    alert("Album supprimé avec succès.");
+                                } else {
+                                    console.error("Erreur lors de la suppression de l\' album.");
+                                }
+                            };
+                            xhr.send("id=" + albumId);
+                        }
+                    }
+                  </script>';
+    
+        return $html;
+    }
+    
 }

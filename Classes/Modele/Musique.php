@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Modele;
 
+use Modele\ModeleDB\MusiqueDB;
+
 final class Musique
 {
     private int $idMusique;
@@ -14,7 +16,7 @@ final class Musique
 
     private String $nomMusique;
 
-    private date $realeaseYear;
+    private int $realeaseYear;
 
     
     private String $image;
@@ -31,7 +33,7 @@ final class Musique
     
     // Constructeur
 
-    public function __construct(int $idMusique, int $idArtiste, String $nomMusique, date $realeaseYear,Image $image, int $nbVues)
+    public function __construct(int $idMusique, int $idArtiste, String $nomMusique, int $realeaseYear,String $image, int $nbVues)
     {
         $this->idMusique = $idMusique;
         $this->idAlbum = null;
@@ -118,6 +120,20 @@ final class Musique
         $html .= "<h2>" . $this->nomMusique . "</h2>";
         $html .= "<p>" . $this->realeaseYear . "</p>";
         $html .= "<p>" . $this->nbVues . "</p>";
+        $html .= "</div>";
+
+        return $html;
+    }
+
+   
+    public function renderAdmin(): string
+    {
+        $html = "<div class='musique'>";
+        $html .= "<img src='path/to/musique/images/{$this->image}' alt='{$this->nomMusique}'>";
+        $html .= "<h2>{$this->nomMusique}</h2>";
+        $html .= "<p>Date de sortie: {$this->realeaseYear}</p>";
+        $html .= "<p>Nombre de vues: {$this->nbVues}</p>";
+        $html .= "<button onclick='deleteMusique({$this->idMusique})'>Supprimer</button>";
         $html .= "</div>";
 
         return $html;
