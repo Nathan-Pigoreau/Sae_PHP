@@ -135,6 +135,11 @@ final class Album
         $this->modelDB->updateAlbum($this);
     }
 
+    public function getMoyenneNote(): float
+    {
+        return $this->modelDB->getMoyenneNote($this->idAlbum);
+    }
+
     public function render()
     {
         $html = '<div class="album">';
@@ -176,6 +181,7 @@ final class Album
         $html .= '<div class="album-details-infos">';
         $html .= '<h2>' . $this->nomAlbum . '</h2>';
         $html .= '<h3>' . $this->releaseYear . '</h3>';
+        $html .= '<h3>' . $this->getMoyenneNote() . '/5'.'</h3>';
         $html .= '<h3> <a href="/artiste-details?id='. $this->idArtiste .'">' . $this->modelDB->getNomArtiste($this->idArtiste) . '</a></h3>';
         $html .= '</div>';
         $html .= '<div class="album-details-image">';

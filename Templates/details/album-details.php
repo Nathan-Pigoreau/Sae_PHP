@@ -31,5 +31,12 @@ if (isset($_GET['id'])) {
         <section>
             <?php echo $album->renderDetails(); ?>
         </section>
+        <h2>Ajouter une note</h2>
+        <form action="/Classes/Controller/controllerNote.php" method="post">
+            <input type="hidden" name="idAlbum" value="<?php echo $album->getIdAlbum(); ?>">
+            <input type="number" name="note" min="0" max="5" required>
+            <input type="submit" value="Noter">
+        </form>
+    </main>
 </body>
 </html>
